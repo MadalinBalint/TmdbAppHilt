@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".ItemMovieListResultBinding">
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="com.mendelin.tmdb_hilt.common.Utils" />
+
+        <variable
+            name="property"
+            type="com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem" />
+
+        <variable
+            name="callback"
+            type="com.mendelin.tmdb_hilt.common.IDetails" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/movieCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
+        android:elevation="12dp"
+        android:focusable="true"
+        android:onClick="@{() -> callback.onClick()}"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card_background"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Movie title -->
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/baloothambi2_medium"
+                android:includeFontPadding="false"
+                android:text="@{@string/top_rated_title(property.title, Utils.INSTANCE.getYear(property.release_date))}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="The Green Mile" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="320dp">
+
+                <!-- Movie poster -->
+                <ImageView
+                    android:id="@+id/imgPoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:visibility="@{TextUtils.isEmpty(property.poster_path) ? View.INVISIBLE : View.VISIBLE}"
+                    app:imageUrl="@{property.poster_path}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/btnFavoriteMovie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:button="@drawable/favorite_states"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp" />
+
+            </FrameLayout>
+
+            <!-- Movie overview -->
+            <TextView
+                android:id="@+id/txtOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/lora_400_regular"
+                android:includeFontPadding="false"
+                android:maxLines="8"
+                android:text="@{property.overview}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="A supernatural tale set on death row in a Southern prison, where gentle giant John Coffey possesses the mysterious power to heal people's ailments. When the cell block's head guard, Paul Edgecomb, recognizes Coffey's miraculous gift, he tries desperately to help stave off the condemned man's execution." />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

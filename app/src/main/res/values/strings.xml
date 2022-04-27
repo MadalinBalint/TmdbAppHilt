@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">The Movie DB</string>
+
+    <string name="top_rated_title">%s - %s</string>
+    <string name="genres_title">%s • %s</string>
+    <string name="movie_details_title">%s (%s)</string>
+    <string name="movie_score">%d%%</string>
+
+    <string name="btn_nav_home">Home</string>
+    <string name="btn_nav_movies">Movies</string>
+    <string name="btn_nav_tv_shows">TV Shows</string>
+    <string name="btn_nav_favorites">Favorites</string>
+
+    <string name="title_top_rated_movies">Top rated movies list</string>
+    <string name="title_now_playing_movies">Now Playing</string>
+    <string name="title_popular_movies">Popular</string>
+    <string name="title_upcoming_movies">Upcoming</string>
+    
+    <string name="title_tv_on_the_air">TV On the Air</string>
+    <string name="title_popular_tv_shows">Popular</string>
+    <string name="title_top_rated_tv_shows">Top rated</string>
+
+    <string name="details_overview">Overview</string>
+    <string name="details_status">Status</string>
+    <string name="details_lang">Original Language</string>
+    <string name="details_budget">Budget</string>
+    <string name="details_user_score">User\nScore</string>
+    <string name="details_director">Director</string>
+    <string name="details_cast">Top Billed Cast</string>
+    <string name="details_created">Created By</string>
+    <string name="details_networks">Networks</string>
+    <string name="details_production_companies">Production Companies</string>
+    <string name="details_seasons">Seasons</string>
+    <string name="details_biography">Biography</string>
+    <string name="details_known_for">Known For</string>
+    <string name="details_gender">Gender</string>
+
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+    <string name="details_birth_place">Place of Birth</string>
+    <string name="details_birthday">Birthday</string>
+    <string name="details_deathday">Death day</string>
+    <string name="details_acting">Acting</string>
+    <string name="details_episodes">Episodes</string>
+
+
+</resources>

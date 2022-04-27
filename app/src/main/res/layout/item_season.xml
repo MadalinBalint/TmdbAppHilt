@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".ItemSeasonBinding">
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="season"
+            type="com.mendelin.tmdb_hilt.data.model.entity.SeasonItem" />
+
+        <variable
+            name="callback"
+            type="com.mendelin.tmdb_hilt.common.IDetails" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/seasonCard"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
+        android:elevation="4dp"
+        android:focusable="true"
+        android:onClick="@{() -> callback.onClick()}"
+        app:cardCornerRadius="8dp"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.5dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/card_background"
+            android:weightSum="3">
+
+            <!-- Season poster -->
+            <ImageView
+                android:id="@+id/imgSeasonPoster"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:visibility="@{TextUtils.isEmpty(season.poster_path) ? View.INVISIBLE : View.VISIBLE}"
+                app:imageUrl="@{season.poster_path}"
+                tools:src="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- Season name -->
+                <TextView
+                    android:id="@+id/txtSeasonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/baloo_500_medium"
+                    android:includeFontPadding="false"
+                    android:text="@{season.name}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="Peaky Blinders" />
+
+                <!-- Season's overview -->
+                <TextView
+                    android:id="@+id/txtSeasonOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/lora_400_regular"
+                    android:includeFontPadding="false"
+                    android:maxLines="10"
+                    android:text="@{season.overview}"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    tools:text="A gangster family epic set in 1919 Birmingham, England and centered on a gang who sew razor blades in the peaks of their caps, and their fierce boss Tommy Shelby, who means to move up in the world." />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

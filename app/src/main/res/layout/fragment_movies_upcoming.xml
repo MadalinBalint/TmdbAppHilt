@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeUpcomingMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.movies_upcoming.MoviesUpcomingFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerUpcomingMovies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            tools:listitem="@layout/item_movie_list_result" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progressUpcomingMovies"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
+
+</FrameLayout>

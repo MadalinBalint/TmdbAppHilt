@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".ItemCastBinding">
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="cast"
+            type="com.mendelin.tmdb_hilt.data.model.entity.CastItem" />
+
+        <variable
+            name="callback"
+            type="com.mendelin.tmdb_hilt.common.IDetails" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/castCard"
+        android:layout_width="160dp"
+        android:layout_height="256dp"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
+        android:elevation="4dp"
+        android:focusable="true"
+        android:onClick="@{() -> callback.onClick()}"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/card_background"
+            android:orientation="vertical">
+
+            <!-- Movie poster -->
+            <ImageView
+                android:id="@+id/imgPoster"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                android:adjustViewBounds="true"
+                android:scaleType="center"
+                android:visibility="@{TextUtils.isEmpty(cast.profile_path) ? View.INVISIBLE : View.VISIBLE}"
+                app:imageUrl="@{cast.profile_path}"
+                tools:src="@tools:sample/avatars" />
+
+            <!-- Actor name -->
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/baloo_500_medium"
+                android:includeFontPadding="false"
+                android:text="@{cast.name}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Rosalie Chiang" />
+
+            <!-- Actor's character -->
+            <TextView
+                android:id="@+id/txtCharacter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/lora_400_regular"
+                android:includeFontPadding="false"
+                android:maxLines="3"
+                android:text="@{cast.character}"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:text="Meilin 'Mei' Lee (voice)" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

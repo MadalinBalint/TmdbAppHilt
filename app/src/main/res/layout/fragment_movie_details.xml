@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutMovieDetails">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.mendelin.tmdb_hilt.ui.movie_details.MoviesDetailsViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="16dp">
+
+            <!-- Movie title -->
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/baloo_500_medium"
+                android:includeFontPadding="false"
+                android:text="@{@string/movie_details_title(viewmodel.details.title, viewmodel.details.getYear())}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="The Green Mile (1999)" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Movie poster -->
+                <ImageView
+                    android:id="@+id/imgPoster"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:gravity="top"
+                    android:scaleType="fitCenter"
+                    android:visibility="@{TextUtils.isEmpty(viewmodel.details.poster_path) ? View.INVISIBLE : View.VISIBLE}"
+                    app:imageUrl="@{viewmodel.details.poster_path}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Content"
+                        android:text="@{viewmodel.details.tagline}"
+                        android:textColor="@android:color/darker_gray"
+                        android:visibility="@{TextUtils.isEmpty(viewmodel.details.tagline) ? View.GONE : View.VISIBLE}"
+                        android:textStyle="italic"
+                        tools:text="Growing up is a beast." />
+
+                    <TextView
+                        style="@style/Content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewmodel.details.getGenreList()}"
+                        tools:text="Animation, Family, Comedy, Fantasy" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:text="@{viewmodel.details.getMovieRuntime()}"
+                        android:textStyle="bold"
+                        tools:text="1h 40m" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_status" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:text="@{viewmodel.details.status}"
+                        tools:text="Released" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_lang" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:text="@{viewmodel.details.getOriginalLanguage()}"
+                        tools:text="English" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_budget" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:text="@{viewmodel.details.getBudgetDetails()}"
+                        tools:text="$190,000,000.00" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp">
+
+                            <com.google.android.material.progressindicator.CircularProgressIndicator
+                                android:id="@+id/progress"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:progress="@{(int)(viewmodel.details.vote_average * 10)}"
+                                app:indicatorColor="@color/purple_500"
+                                app:indicatorSize="48dp"
+                                app:trackColor="@color/teal_200" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/baloo_700_bold"
+                                android:gravity="center"
+                                android:text="@{@string/movie_score((int)(viewmodel.details.vote_average * 10))}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="74%" />
+
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/baloo_600_semibold"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:text="@string/details_user_score"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Movie director -->
+            <TextView
+                style="@style/HeadlineTitle"
+                android:layout_marginTop="16dp"
+                android:text="@string/details_director" />
+
+            <TextView
+                style="@style/Content"
+                android:fontFamily="@font/lora_400_regular"
+                android:text="@{viewmodel.credits.getDirectorName()}"
+                android:textSize="12sp"
+                tools:text="Shoomi Lee" />
+
+            <!-- Movie overview -->
+            <TextView
+                style="@style/HeadlineTitle"
+                android:layout_marginTop="12dp"
+                android:text="@string/details_overview" />
+
+            <TextView
+                android:id="@+id/txtOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/lora_400_regular"
+                android:includeFontPadding="false"
+                android:maxLines="8"
+                android:text="@{viewmodel.details.overview}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="A supernatural tale set on death row in a Southern prison, where gentle giant John Coffey possesses the mysterious power to heal people's ailments. When the cell block's head guard, Paul Edgecomb, recognizes Coffey's miraculous gift, he tries desperately to help stave off the condemned man's execution." />
+
+            <TextView
+                style="@style/HeadlineTitle"
+                android:layout_marginTop="12dp"
+                android:text="@string/details_cast" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerMovieCast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                tools:listitem="@layout/item_cast" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".ItemCreditBinding">
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="cast"
+            type="com.mendelin.tmdb_hilt.data.model.entity.MovieCreditsCastItem" />
+
+        <variable
+            name="callback"
+            type="com.mendelin.tmdb_hilt.common.IDetails" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/creditsCard"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
+        android:focusable="true"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.5dp"
+        android:onClick="@{() -> callback.onClick()}"
+        android:shadowRadius="0"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/card_background"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- Movie poster -->
+            <ImageView
+                android:id="@+id/imgPoster"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="center"
+                android:visibility="@{TextUtils.isEmpty(cast.poster_path) ? View.INVISIBLE : View.VISIBLE}"
+                app:imageUrl="@{cast.poster_path}"
+                tools:src="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="12dp"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtReleaseDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_500_medium"
+                    android:includeFontPadding="false"
+                    android:text="@{cast.release_date}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="2022" />
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/lora_400_regular"
+                    android:includeFontPadding="false"
+                    android:text="@{cast.title}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    tools:text="Embrace the Panda: Making Turning Red" />
+
+                <TextView
+                    android:id="@+id/txtCharacter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/lora_400_regular"
+                    android:includeFontPadding="false"
+                    android:text="@{cast.character}"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    tools:text="Self (archive footage)" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="4dp">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:progress="@{(int)(cast.vote_average * 10)}"
+                    app:indicatorColor="@color/purple_500"
+                    app:indicatorSize="32dp"
+                    app:trackColor="@color/teal_200" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/baloo_400_regular"
+                    android:gravity="center"
+                    android:text="@{@string/movie_score((int)(cast.vote_average * 10))}"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    tools:text="74%" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

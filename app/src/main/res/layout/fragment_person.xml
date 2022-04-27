@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutPerson">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.mendelin.tmdb_hilt.ui.person.PersonViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Person poster -->
+                <ImageView
+                    android:id="@+id/imgPoster"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:visibility="@{TextUtils.isEmpty(viewmodel.details.profile_path) ? View.INVISIBLE : View.VISIBLE}"
+                    app:imageUrl="@{viewmodel.details.profile_path}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtPersonName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/baloo_500_medium"
+                        android:includeFontPadding="false"
+                        android:text="@{viewmodel.details.name}"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="Rosalie Chiang" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/details_known_for" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:fontFamily="@font/lora_400_regular"
+                        android:text="@{viewmodel.details.known_for_department}"
+                        android:textSize="12sp"
+                        tools:text="Shoomi Lee" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_gender" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:fontFamily="@font/lora_400_regular"
+                        android:text="@{viewmodel.details.gender == 1 ? @string/gender_female : @string/gender_male}"
+                        android:textSize="12sp"
+                        tools:text="Shoomi Lee" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_birth_place"
+                        android:visibility="@{viewmodel.details.place_of_birth == null ? View.GONE : View.VISIBLE}" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:fontFamily="@font/lora_400_regular"
+                        android:text="@{viewmodel.details.place_of_birth}"
+                        android:textSize="12sp"
+                        android:visibility="@{viewmodel.details.place_of_birth == null ? View.GONE : View.VISIBLE}"
+                        tools:text="Shoomi Lee" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_birthday"
+                        android:visibility="@{viewmodel.details.birthday == null ? View.GONE : View.VISIBLE}" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:fontFamily="@font/lora_400_regular"
+                        android:text="@{viewmodel.details.birthday}"
+                        android:textSize="12sp"
+                        android:visibility="@{viewmodel.details.birthday == null ? View.GONE : View.VISIBLE}"
+                        tools:text="Shoomi Lee" />
+
+                    <TextView
+                        style="@style/HeadlineTitle"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/details_deathday"
+                        android:visibility="@{viewmodel.details.deathday == null ? View.GONE : View.VISIBLE}" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:fontFamily="@font/lora_400_regular"
+                        android:text="@{viewmodel.details.deathday}"
+                        android:textSize="12sp"
+                        android:visibility="@{viewmodel.details.deathday == null ? View.GONE : View.VISIBLE}"
+                        tools:text="Shoomi Lee" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Movie director -->
+            <TextView
+                style="@style/HeadlineTitle"
+                android:layout_marginTop="16dp"
+                android:text="@string/details_biography"
+                android:visibility="@{viewmodel.details.biography.isEmpty ? View.GONE : View.VISIBLE}" />
+
+            <TextView
+                style="@style/Content"
+                android:fontFamily="@font/lora_400_regular"
+                android:text="@{viewmodel.details.biography}"
+                android:textSize="12sp"
+                android:visibility="@{viewmodel.details.biography.isEmpty ? View.GONE : View.VISIBLE}"
+                tools:text="Shoomi Lee" />
+
+            <TextView
+                style="@style/HeadlineTitle"
+                android:layout_marginTop="12dp"
+                android:text="@string/details_acting" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCredits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                tools:listitem="@layout/item_credit" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

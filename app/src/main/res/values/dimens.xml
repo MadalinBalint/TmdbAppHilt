@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="recyclerview_margin_horizontal">16dp</dimen>
+    <dimen name="recyclerview_margin_vertical">8dp</dimen>
+</resources>
