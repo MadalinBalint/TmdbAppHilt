@@ -14,7 +14,7 @@ import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.FavoriteType
 import com.mendelin.tmdb_hilt.common.IDetails
 import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.model.favorite.MultipleItem
+import com.mendelin.tmdb_hilt.data.model.entity.MultipleItem
 import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,7 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
 
                 btnFavoriteMovie.isChecked = true
 
-                btnFavoriteMovie.setOnCheckedChangeListener { _, check ->
+                btnFavoriteMovie.setOnCheckedChangeListener { _, _ ->
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.repository.deleteFavoriteMovie(movie.id)
                         delay(200)
@@ -63,7 +63,7 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
 
                 btnFavoriteTvShow.isChecked = true
 
-                btnFavoriteTvShow.setOnCheckedChangeListener { _, check ->
+                btnFavoriteTvShow.setOnCheckedChangeListener { _, _ ->
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.repository.deleteFavoriteTvShow(tvShow.id)
                         delay(200)

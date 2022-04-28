@@ -4,7 +4,6 @@ import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.mendelin.tmdb_hilt.data.model.favorite.FavoriteItem
 import com.mendelin.tmdb_hilt.data.room.ConverterIntList
 
 @Keep
@@ -25,4 +24,4 @@ data class MovieListResultEntity(
     val vote_count: Int,
     val video: Boolean,
     val vote_average: Float
-) : FavoriteItem()
+) : FavoriteEntity()

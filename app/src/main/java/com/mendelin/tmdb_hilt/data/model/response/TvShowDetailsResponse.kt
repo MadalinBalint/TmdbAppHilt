@@ -45,9 +45,9 @@ data class TvShowDetailsResponse(
 ) {
     fun getYear(date: String): String {
         val sd = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = sd.parse(date)
+        val parsedDate = sd.parse(date)
         val calendar = Calendar.getInstance()
-        calendar.time = date!!
+        calendar.time = parsedDate!!
         return calendar.get(Calendar.YEAR).toString()
     }
 

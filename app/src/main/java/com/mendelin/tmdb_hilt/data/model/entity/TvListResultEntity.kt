@@ -4,7 +4,6 @@ import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.mendelin.tmdb_hilt.data.model.favorite.FavoriteItem
 import com.mendelin.tmdb_hilt.data.room.ConverterIntList
 import com.mendelin.tmdb_hilt.data.room.ConverterStringList
 
@@ -26,4 +25,4 @@ data class TvListResultEntity(
     val vote_count: Int,
     val name: String,
     val original_name: String
-) : FavoriteItem()
+) : FavoriteEntity()
