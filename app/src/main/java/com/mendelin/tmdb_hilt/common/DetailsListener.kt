@@ -1,5 +1,5 @@
 package com.mendelin.tmdb_hilt.common
 
-fun interface IDetails {
+fun interface DetailsListener {
     fun onClick()
 }
