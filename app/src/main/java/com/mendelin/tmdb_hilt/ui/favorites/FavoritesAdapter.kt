@@ -13,9 +13,9 @@ import com.mendelin.tmdb_hilt.ItemTvListResultBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.FavoriteType
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
-import com.mendelin.tmdb_hilt.data.model.entity.MultipleItem
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.data.model.favorite.MultipleItem
+import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -25,7 +25,7 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
     private val favoritesList: ArrayList<MultipleItem> = ArrayList()
 
     inner class MultipleViewHolder(var binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindMovie(movie: MovieListResultItem) {
+        fun bindMovie(movie: MovieListResultEntity) {
             (binding as ItemMovieListResultBinding).apply {
                 property = movie
                 callback = IDetails {
@@ -49,7 +49,7 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
             }
         }
 
-        fun bindTvShow(tvShow: TvListResultItem) {
+        fun bindTvShow(tvShow: TvListResultEntity) {
             (binding as ItemTvListResultBinding).apply {
                 property = tvShow
 
@@ -105,10 +105,10 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
     override fun onBindViewHolder(holder: MultipleViewHolder, position: Int) {
         when (getItemViewType(position)) {
             FavoriteType.FAVORITE_MOVIE.value ->
-                holder.bindMovie(favoritesList[position].content as MovieListResultItem)
+                holder.bindMovie(favoritesList[position].content as MovieListResultEntity)
 
             FavoriteType.FAVORITE_TV_SHOW.value ->
-                holder.bindTvShow(favoritesList[position].content as TvListResultItem)
+                holder.bindTvShow(favoritesList[position].content as TvListResultEntity)
         }
     }
 

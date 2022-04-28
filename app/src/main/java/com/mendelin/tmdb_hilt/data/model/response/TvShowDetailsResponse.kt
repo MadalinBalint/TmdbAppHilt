@@ -1,7 +1,7 @@
 package com.mendelin.tmdb_hilt.data.model.response
 
 import androidx.annotation.Keep
-import com.mendelin.tmdb_hilt.data.model.entity.*
+import com.mendelin.tmdb_hilt.data.model.rest_api.*
 import java.text.SimpleDateFormat
 import java.util.*
 

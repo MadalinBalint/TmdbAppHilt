@@ -3,14 +3,13 @@ package com.mendelin.tmdb_hilt.ui.tv_show_seasons
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemSeasonBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.SeasonItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.SeasonItem
 
 class SeasonsAdapter(val tv_name: String, val tv_id: Int) : ListAdapter<SeasonItem, SeasonsAdapter.SeasonViewHolder>(SeasonDiffCallBack()) {
     private val castList: ArrayList<SeasonItem> = ArrayList()

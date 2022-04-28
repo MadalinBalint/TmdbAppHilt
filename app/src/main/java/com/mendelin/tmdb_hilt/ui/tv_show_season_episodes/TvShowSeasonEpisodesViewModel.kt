@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.common.RetrofitResponseHandler
-import com.mendelin.tmdb_hilt.data.model.entity.EpisodeItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.EpisodeItem
 import com.mendelin.tmdb_hilt.data.model.response.TvSeasonDetailsResponse
 import com.mendelin.tmdb_hilt.data.repository.remote.TvShowsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

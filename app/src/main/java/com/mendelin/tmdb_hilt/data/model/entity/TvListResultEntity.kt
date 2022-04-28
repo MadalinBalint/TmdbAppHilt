@@ -4,12 +4,13 @@ import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.mendelin.tmdb_hilt.data.model.favorite.FavoriteItem
 import com.mendelin.tmdb_hilt.data.room.ConverterIntList
 import com.mendelin.tmdb_hilt.data.room.ConverterStringList
 
 @Keep
 @Entity(tableName = "favorite_tvshows")
-data class TvListResultItem(
+data class TvListResultEntity(
     val poster_path: String?,
     val popularity: Float,
     @PrimaryKey val id: Int,

@@ -1,8 +1,8 @@
 package com.mendelin.tmdb_hilt.data.model.response
 
 import androidx.annotation.Keep
-import com.mendelin.tmdb_hilt.data.model.entity.TvCreditsCastItem
-import com.mendelin.tmdb_hilt.data.model.entity.TvCreditsCrewItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.TvCreditsCastItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.TvCreditsCrewItem
 
 @Keep
 data class PersonTvCreditsResponse(

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemMovieListResultBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class HomeAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<MovieListResultItem, HomeAdapter.TopRatedMoviesViewHolder>(TopRatedMoviesDiffCallBack()) {
+class HomeAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<MovieListResultEntity, HomeAdapter.TopRatedMoviesViewHolder>(TopRatedMoviesDiffCallBack()) {
     inner class TopRatedMoviesViewHolder(var binding: ItemMovieListResultBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieListResultItem) {
+        fun bind(movie: MovieListResultEntity) {
             binding.property = movie
 
             binding.callback = IDetails {
@@ -42,12 +42,12 @@ class HomeAdapter @Inject constructor(val repository: FavoritesRepository) : Pag
         }
     }
 
-    class TopRatedMoviesDiffCallBack : DiffUtil.ItemCallback<MovieListResultItem>() {
-        override fun areItemsTheSame(oldItem: MovieListResultItem, newItem: MovieListResultItem): Boolean {
+    class TopRatedMoviesDiffCallBack : DiffUtil.ItemCallback<MovieListResultEntity>() {
+        override fun areItemsTheSame(oldItem: MovieListResultEntity, newItem: MovieListResultEntity): Boolean {
             return oldItem.title == newItem.title
         }
 
-        override fun areContentsTheSame(oldItem: MovieListResultItem, newItem: MovieListResultItem): Boolean {
+        override fun areContentsTheSame(oldItem: MovieListResultEntity, newItem: MovieListResultEntity): Boolean {
             return oldItem == newItem
         }
     }

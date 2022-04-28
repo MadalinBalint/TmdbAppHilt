@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.common.RetrofitResponseHandler
-import com.mendelin.tmdb_hilt.data.model.entity.CastItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.CastItem
 import com.mendelin.tmdb_hilt.data.model.response.CreditsResponse
 import com.mendelin.tmdb_hilt.data.model.response.MovieDetailsResponse
 import com.mendelin.tmdb_hilt.data.repository.remote.MoviesRepository

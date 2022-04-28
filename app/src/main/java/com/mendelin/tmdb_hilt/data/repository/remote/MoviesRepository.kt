@@ -1,7 +1,7 @@
 package com.mendelin.tmdb_hilt.data.repository.remote
 
 import com.mendelin.tmdb_hilt.data.api.TmdbDataSource
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.data.model.response.CreditsResponse
 import com.mendelin.tmdb_hilt.data.model.response.MovieDetailsResponse
 import com.mendelin.tmdb_hilt.data.model.response.NowPlayingGenericResponse
@@ -16,15 +16,15 @@ class MoviesRepository @Inject constructor(val service: TmdbDataSource) {
     suspend fun getMovieCredits(movie_id: Int): Response<CreditsResponse> =
         service.getMovieCredits(movie_id)
 
-    suspend fun getNowPlayingMovies(page: Int): Response<NowPlayingGenericResponse<MovieListResultItem>> =
+    suspend fun getNowPlayingMovies(page: Int): Response<NowPlayingGenericResponse<MovieListResultEntity>> =
         service.getMovieNowPlaying(page = page)
 
-    suspend fun getPopularMovies(page: Int): Response<PagedGenericResponse<MovieListResultItem>> =
+    suspend fun getPopularMovies(page: Int): Response<PagedGenericResponse<MovieListResultEntity>> =
         service.getMoviePopular(page = page)
 
-    suspend fun getTopRatedMovies(page: Int): Response<PagedGenericResponse<MovieListResultItem>> =
+    suspend fun getTopRatedMovies(page: Int): Response<PagedGenericResponse<MovieListResultEntity>> =
         service.getMoviesTopRated(page = page)
 
-    suspend fun getUpcomingMovies(page: Int): Response<NowPlayingGenericResponse<MovieListResultItem>> =
+    suspend fun getUpcomingMovies(page: Int): Response<NowPlayingGenericResponse<MovieListResultEntity>> =
         service.getMovieUpcoming(page = page)
 }

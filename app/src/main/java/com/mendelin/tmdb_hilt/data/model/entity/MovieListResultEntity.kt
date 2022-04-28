@@ -4,11 +4,12 @@ import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.mendelin.tmdb_hilt.data.model.favorite.FavoriteItem
 import com.mendelin.tmdb_hilt.data.room.ConverterIntList
 
 @Keep
 @Entity(tableName = "favorite_movies")
-data class MovieListResultItem(
+data class MovieListResultEntity(
     val poster_path: String?,
     val adult: Boolean,
     val overview: String,

@@ -1,10 +1,10 @@
 package com.mendelin.tmdb_hilt.data.model.response
 
 import androidx.annotation.Keep
-import com.mendelin.tmdb_hilt.data.model.entity.GenreItem
-import com.mendelin.tmdb_hilt.data.model.entity.ProductionCompanyItem
-import com.mendelin.tmdb_hilt.data.model.entity.ProductionCountryItem
-import com.mendelin.tmdb_hilt.data.model.entity.SpokenLanguageItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.GenreItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.ProductionCompanyItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.ProductionCountryItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.SpokenLanguageItem
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*

@@ -13,7 +13,7 @@
 
         <variable
             name="property"
-            type="com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem" />
+            type="com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity" />
 
         <variable
             name="callback"

@@ -3,14 +3,13 @@ package com.mendelin.tmdb_hilt.ui.person
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemCreditBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.MovieCreditsCastItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.MovieCreditsCastItem
 
 class CreditsAdapter : ListAdapter<MovieCreditsCastItem, CreditsAdapter.CreditsViewHolder>(CreditsDiffCallBack()) {
     private val creditsList: ArrayList<MovieCreditsCastItem> = ArrayList()

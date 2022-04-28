@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemTvListResultBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TvPopularAdapter @Inject constructor(val repository: FavoritesRepository): PagingDataAdapter<TvListResultItem, TvPopularAdapter.TvPopularViewHolder>(TvPopularDiffCallBack()) {
+class TvPopularAdapter @Inject constructor(val repository: FavoritesRepository): PagingDataAdapter<TvListResultEntity, TvPopularAdapter.TvPopularViewHolder>(TvPopularDiffCallBack()) {
 
    inner class TvPopularViewHolder(var binding: ItemTvListResultBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: TvListResultItem) {
+        fun bind(tvShow: TvListResultEntity) {
             binding.property = tvShow
 
             binding.callback = IDetails {
@@ -43,12 +43,12 @@ class TvPopularAdapter @Inject constructor(val repository: FavoritesRepository):
         }
     }
 
-    class TvPopularDiffCallBack : DiffUtil.ItemCallback<TvListResultItem>() {
-        override fun areItemsTheSame(oldItem: TvListResultItem, newItem: TvListResultItem): Boolean {
+    class TvPopularDiffCallBack : DiffUtil.ItemCallback<TvListResultEntity>() {
+        override fun areItemsTheSame(oldItem: TvListResultEntity, newItem: TvListResultEntity): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: TvListResultItem, newItem: TvListResultItem): Boolean {
+        override fun areContentsTheSame(oldItem: TvListResultEntity, newItem: TvListResultEntity): Boolean {
             return oldItem == newItem
         }
 

@@ -1,7 +1,7 @@
 package com.mendelin.tmdb_hilt.data.repository.remote
 
 import com.mendelin.tmdb_hilt.data.api.TmdbDataSource
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.model.response.*
 import retrofit2.Response
 import javax.inject.Inject
@@ -13,13 +13,13 @@ class TvShowsRepository @Inject constructor(val service: TmdbDataSource) {
     suspend fun getTvShowCredits(tv_id: Int): Response<CreditsResponse> =
         service.getTvCredits(tv_id)
 
-    suspend fun getPopularTvShows(page: Int): Response<PagedGenericResponse<TvListResultItem>> =
+    suspend fun getPopularTvShows(page: Int): Response<PagedGenericResponse<TvListResultEntity>> =
         service.getTvPopular(page = page)
 
-    suspend fun getOnTheAirTvShows(page: Int): Response<PagedGenericResponse<TvListResultItem>> =
+    suspend fun getOnTheAirTvShows(page: Int): Response<PagedGenericResponse<TvListResultEntity>> =
         service.getTvOnTheAir(page = page)
 
-    suspend fun getTopRatedTvShows(page: Int): Response<PagedGenericResponse<TvListResultItem>> =
+    suspend fun getTopRatedTvShows(page: Int): Response<PagedGenericResponse<TvListResultEntity>> =
         service.getTvTopRated(page = page)
 
     suspend fun getTvSeasonDetails(tv_id: Int, season: Int): Response<TvSeasonDetailsResponse> =

@@ -1,15 +1,14 @@
 package com.mendelin.tmdb_hilt.data.api
 
 import com.mendelin.tmdb_hilt.BuildConfig
-import com.mendelin.tmdb_hilt.data.model.entity.GenreItem
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.GenreItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.model.response.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import javax.inject.Inject
 
 interface TmdbDataSource {
     /* Genre */
@@ -43,28 +42,28 @@ interface TmdbDataSource {
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US",
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1
-    ): Response<NowPlayingGenericResponse<MovieListResultItem>>
+    ): Response<NowPlayingGenericResponse<MovieListResultEntity>>
 
     @GET(BuildConfig.ENDPOINT_MOVIE_POPULAR)
     suspend fun getMoviePopular(
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US",
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1
-    ): Response<PagedGenericResponse<MovieListResultItem>>
+    ): Response<PagedGenericResponse<MovieListResultEntity>>
 
     @GET(BuildConfig.ENDPOINT_MOVIE_TOP_RATED)
     suspend fun getMoviesTopRated(
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US",
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1
-    ): Response<PagedGenericResponse<MovieListResultItem>>
+    ): Response<PagedGenericResponse<MovieListResultEntity>>
 
     @GET(BuildConfig.ENDPOINT_MOVIE_UPCOMING)
     suspend fun getMovieUpcoming(
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1,
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US"
-    ): Response<NowPlayingGenericResponse<MovieListResultItem>>
+    ): Response<NowPlayingGenericResponse<MovieListResultEntity>>
 
     /* People */
     @GET(BuildConfig.ENDPOINT_PERSON_DETAILS)
@@ -108,21 +107,21 @@ interface TmdbDataSource {
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1,
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US",
-    ): Response<PagedGenericResponse<TvListResultItem>>
+    ): Response<PagedGenericResponse<TvListResultEntity>>
 
     @GET(BuildConfig.ENDPOINT_TV_POPULAR)
     suspend fun getTvPopular(
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US",
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1
-    ): Response<PagedGenericResponse<TvListResultItem>>
+    ): Response<PagedGenericResponse<TvListResultEntity>>
 
     @GET(BuildConfig.ENDPOINT_TV_TOP_RATED)
     suspend fun getTvTopRated(
         @Query(BuildConfig.QUERY_PAGE) page: Int = 1,
         @Query(BuildConfig.QUERY_API_KEY) apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query(BuildConfig.QUERY_LANGUAGE) language: String = "en-US",
-    ): Response<PagedGenericResponse<TvListResultItem>>
+    ): Response<PagedGenericResponse<TvListResultEntity>>
 
     /* TV Seasons */
     @GET(BuildConfig.ENDPOINT_TV_SEASON_DETAILS)

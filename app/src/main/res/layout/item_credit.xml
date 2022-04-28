@@ -11,7 +11,7 @@
 
         <variable
             name="cast"
-            type="com.mendelin.tmdb_hilt.data.model.entity.MovieCreditsCastItem" />
+            type="com.mendelin.tmdb_hilt.data.model.rest_api.MovieCreditsCastItem" />
 
         <variable
             name="callback"

@@ -3,7 +3,7 @@ package com.mendelin.tmdb_hilt.ui.favorites
 import androidx.lifecycle.MutableLiveData
 import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.common.FavoriteType
-import com.mendelin.tmdb_hilt.data.model.entity.MultipleItem
+import com.mendelin.tmdb_hilt.data.model.favorite.MultipleItem
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope

@@ -1,4 +1,4 @@
-package com.mendelin.tmdb_hilt.data.model.entity
+package com.mendelin.tmdb_hilt.data.model.favorite
 
 import androidx.annotation.Keep
 

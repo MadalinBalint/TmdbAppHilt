@@ -2,24 +2,24 @@ package com.mendelin.tmdb_hilt.ui.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.data.repository.remote.MoviesRepository
 import kotlinx.coroutines.flow.first
 import timber.log.Timber
 import javax.inject.Inject
 
-class HomePagingSource @Inject constructor(val repo: MoviesRepository, val preferences: PreferencesRepository) : PagingSource<Int, MovieListResultItem>() {
+class HomePagingSource @Inject constructor(val repo: MoviesRepository, val preferences: PreferencesRepository) : PagingSource<Int, MovieListResultEntity>() {
     private var firstLoad = true
 
-    override fun getRefreshKey(state: PagingState<Int, MovieListResultItem>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, MovieListResultEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieListResultItem> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieListResultEntity> {
         return try {
             val currentPage = if (firstLoad) {
                 /* Load last viewed page from Datastore */

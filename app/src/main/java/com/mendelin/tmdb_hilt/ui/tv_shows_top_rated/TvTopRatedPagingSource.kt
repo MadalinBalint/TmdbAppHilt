@@ -2,23 +2,23 @@ package com.mendelin.tmdb_hilt.ui.tv_shows_top_rated
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.data.repository.remote.TvShowsRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class TvTopRatedPagingSource @Inject constructor(val repo: TvShowsRepository, val preferences: PreferencesRepository) : PagingSource<Int, TvListResultItem>() {
+class TvTopRatedPagingSource @Inject constructor(val repo: TvShowsRepository, val preferences: PreferencesRepository) : PagingSource<Int, TvListResultEntity>() {
     private var firstLoad = true
 
-    override fun getRefreshKey(state: PagingState<Int, TvListResultItem>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, TvListResultEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvListResultItem> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvListResultEntity> {
         return try {
             val currentPage = if (firstLoad) {
                 /* Load last viewed page from Datastore */

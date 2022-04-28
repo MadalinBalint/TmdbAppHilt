@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemEpisodeBinding
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.EpisodeItem
+import com.mendelin.tmdb_hilt.data.model.rest_api.EpisodeItem
 
 class SeasonEpisodesAdapter : ListAdapter<EpisodeItem, SeasonEpisodesAdapter.SeasonEpisodeViewHolder>(SeasonEpisodeDiffCallBack()) {
     private val castList: ArrayList<EpisodeItem> = ArrayList()

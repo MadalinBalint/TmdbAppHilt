@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemMovieListResultBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.IDetails
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MoviesNowPlayingAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<MovieListResultItem, MoviesNowPlayingAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
+class MoviesNowPlayingAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<MovieListResultEntity, MoviesNowPlayingAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
     inner class NowPlayingMoviesViewHolder(var binding: ItemMovieListResultBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieListResultItem) {
+        fun bind(movie: MovieListResultEntity) {
             binding.property = movie
             binding.callback = IDetails {
                 val navController = Navigation.findNavController(binding.root)
@@ -42,12 +42,12 @@ class MoviesNowPlayingAdapter @Inject constructor(val repository: FavoritesRepos
         }
     }
 
-    class NowPlayingMoviesDiffCallBack : DiffUtil.ItemCallback<MovieListResultItem>() {
-        override fun areItemsTheSame(oldItem: MovieListResultItem, newItem: MovieListResultItem): Boolean {
+    class NowPlayingMoviesDiffCallBack : DiffUtil.ItemCallback<MovieListResultEntity>() {
+        override fun areItemsTheSame(oldItem: MovieListResultEntity, newItem: MovieListResultEntity): Boolean {
             return oldItem.title == newItem.title
         }
 
-        override fun areContentsTheSame(oldItem: MovieListResultItem, newItem: MovieListResultItem): Boolean {
+        override fun areContentsTheSame(oldItem: MovieListResultEntity, newItem: MovieListResultEntity): Boolean {
             return oldItem == newItem
         }
     }

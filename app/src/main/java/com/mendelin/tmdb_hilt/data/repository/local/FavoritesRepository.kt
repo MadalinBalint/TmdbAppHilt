@@ -1,7 +1,7 @@
 package com.mendelin.tmdb_hilt.data.repository.local
 
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultItem
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultItem
+import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.room.FavoritesDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class FavoritesRepository @Inject constructor(val dataSource: FavoritesDao) {
     /* Movies */
-    suspend fun insertFavoriteMovie(movie: MovieListResultItem) {
+    suspend fun insertFavoriteMovie(movie: MovieListResultEntity) {
         dataSource.insertFavoriteMovie(movie)
     }
 
@@ -25,11 +25,11 @@ class FavoritesRepository @Inject constructor(val dataSource: FavoritesDao) {
     suspend fun deleteFavoriteMovie(id: Int) =
         dataSource.deleteFavoriteMovie(id)
 
-    fun getFavoriteMovies(): Flow<List<MovieListResultItem>> =
+    fun getFavoriteMovies(): Flow<List<MovieListResultEntity>> =
         dataSource.getFavoriteMovies()
 
     /* TV Shows */
-    suspend fun insertFavoriteTvShow(tvShow: TvListResultItem) {
+    suspend fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
         dataSource.insertFavoriteTvShow(tvShow)
     }
 
@@ -44,6 +44,6 @@ class FavoritesRepository @Inject constructor(val dataSource: FavoritesDao) {
     suspend fun deleteFavoriteTvShow(id: Int) =
         dataSource.deleteFavoriteTvShow(id)
 
-    fun getFavoriteTvShows(): Flow<List<TvListResultItem>> =
+    fun getFavoriteTvShows(): Flow<List<TvListResultEntity>> =
         dataSource.getFavoriteTvShows()
 }
