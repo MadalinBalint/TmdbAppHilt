@@ -10,7 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.mendelin.tmdb_hilt.R
 
 @BindingAdapter("imageUrl")
-/* Binding adapter for the cat image in breeds list */
 fun ImageView.setImageUrl(imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         val circularProgressDrawable = CircularProgressDrawable(context)

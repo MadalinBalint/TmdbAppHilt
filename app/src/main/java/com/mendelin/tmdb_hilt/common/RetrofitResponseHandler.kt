@@ -55,8 +55,9 @@ class RetrofitResponseHandler<T>(val onSuccess: OnSuccessCallback<T>, val onErro
             if (response.isSuccessful) {
                 if (response.body() != null) {
                     onSuccess(response.body()!!)
-                } else
+                } else {
                     onError("Null response body")
+                }
             } else {
                 onError("Error : ${response.message()} ")
             }

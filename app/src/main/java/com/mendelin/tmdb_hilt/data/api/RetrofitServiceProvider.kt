@@ -18,7 +18,7 @@ object RetrofitServiceProvider {
 
     private var api: TmdbDataSource? = null
 
-    fun okHttpClient(): OkHttpClient =
+    private fun okHttpClient(): OkHttpClient =
         OkHttpClient.Builder().apply {
             readTimeout(60, TimeUnit.SECONDS)
             connectTimeout(60, TimeUnit.SECONDS)
@@ -46,8 +46,8 @@ object RetrofitServiceProvider {
                     }
 
                     /* Intercept empty body response */
-                    if (response.body()?.contentLength() == 0L) {
-                        val contentType: MediaType? = response.body()!!.contentType()
+                    if (response.body()?.contentLength() ?: 0L == 0L) {
+                        val contentType: MediaType? = response.body()?.contentType()
                         val body: ResponseBody = ResponseBody.create(contentType, "{}")
                         return@Interceptor response.newBuilder().body(body).build()
                     }
@@ -57,7 +57,7 @@ object RetrofitServiceProvider {
             )
         }.build()
 
-    fun getGsonClient(): Gson {
+    private fun getGsonClient(): Gson {
         return GsonBuilder()
             .setLenient()
             .create()

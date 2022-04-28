@@ -5,12 +5,12 @@ import timber.log.Timber
 
 class TimberDebugger : Timber.Tree() {
 
-    override fun isLoggable(priority: Int): Boolean { // determine what type of entries to log
+    override fun isLoggable(tag: String?, priority: Int): Boolean { // determine what type of entries to log
         return priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO
     }
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        if (isLoggable(priority)) {
+        if (isLoggable(tag, priority)) {
             if (message.length < LOG_MAX_LENGTH) { // If Message is within the prescribed length. no need to split
                 doLog(priority, tag, message)
                 return
@@ -36,7 +36,7 @@ class TimberDebugger : Timber.Tree() {
 
     private fun doLog(priority: Int, tag: String?, message: String) {
         if (priority == Log.ASSERT) {
-            Log.wtf(tag, message)
+            Timber.wtf(message)
         } else {
             Log.println(priority, tag, message)
         }
@@ -44,6 +44,6 @@ class TimberDebugger : Timber.Tree() {
 
     companion object {
 
-        private val LOG_MAX_LENGTH = 3000 // set maximum length of log
+        private const val LOG_MAX_LENGTH = 3000 // set maximum length of log
     }
 }
