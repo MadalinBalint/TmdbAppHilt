@@ -12,7 +12,7 @@ import com.mendelin.tmdb_hilt.ItemMovieListResultBinding
 import com.mendelin.tmdb_hilt.ItemTvListResultBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.FavoriteType
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.data.model.entity.MultipleItem
 import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
@@ -21,14 +21,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<MultipleItem, FavoritesAdapter.MultipleViewHolder>(MultipleDiffCallback()) {
+class FavoritesAdapter(val callback: FavoritesCallback) : ListAdapter<MultipleItem, FavoritesAdapter.MultipleViewHolder>(MultipleDiffCallback()) {
     private val favoritesList: ArrayList<MultipleItem> = ArrayList()
 
     inner class MultipleViewHolder(var binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindMovie(movie: MovieListResultEntity) {
             (binding as ItemMovieListResultBinding).apply {
                 property = movie
-                callback = IDetails {
+                listener = DetailsListener {
                     val args = Bundle()
                     args.putInt("movieId", movie.id)
 
@@ -39,9 +39,9 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
 
                 btnFavoriteMovie.setOnCheckedChangeListener { _, _ ->
                     CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.repository.deleteFavoriteMovie(movie.id)
+                        callback.deleteFavoriteMovie(movie.id)
                         delay(200)
-                        viewModel.fetchFavoritesList()
+                        callback.fetchFavoritesList()
                     }
                 }
 
@@ -53,7 +53,7 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
             (binding as ItemTvListResultBinding).apply {
                 property = tvShow
 
-                callback = IDetails {
+                listener = DetailsListener {
                     val args = Bundle()
                     args.putString("tvShowName", tvShow.name)
                     args.putInt("tvShowId", tvShow.id)
@@ -65,9 +65,9 @@ class FavoritesAdapter(val viewModel: FavoritesViewModel) : ListAdapter<Multiple
 
                 btnFavoriteTvShow.setOnCheckedChangeListener { _, _ ->
                     CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.repository.deleteFavoriteTvShow(tvShow.id)
+                        callback.deleteFavoriteTvShow(tvShow.id)
                         delay(200)
-                        viewModel.fetchFavoritesList()
+                        callback.fetchFavoritesList()
                     }
                 }
 

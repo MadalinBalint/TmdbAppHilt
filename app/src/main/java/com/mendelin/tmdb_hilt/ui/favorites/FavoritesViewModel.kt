@@ -1,5 +1,6 @@
 package com.mendelin.tmdb_hilt.ui.favorites
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.common.FavoriteType
@@ -15,7 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(val repository: FavoritesRepository) : BaseViewModel() {
-    val favoritesList = MutableLiveData<List<MultipleItem>>()
+    private val favoritesList = MutableLiveData<List<MultipleItem>>()
+
+    fun getFavoritesList(): LiveData<List<MultipleItem>> = favoritesList
 
     private suspend fun fetchFavoriteMovies(): List<MultipleItem> {
         return repository.getFavoriteMovies()
@@ -33,7 +36,7 @@ class FavoritesViewModel @Inject constructor(val repository: FavoritesRepository
             }
     }
 
-    fun fetchFavoritesList() {
+     fun fetchFavoritesList() {
         CoroutineScope(Dispatchers.IO).launch {
             val favorites = mutableListOf<MultipleItem>()
             val movies = fetchFavoriteMovies()

@@ -16,8 +16,8 @@
             type="com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity" />
 
         <variable
-            name="callback"
-            type="com.mendelin.tmdb_hilt.common.IDetails" />
+            name="listener"
+            type="com.mendelin.tmdb_hilt.common.DetailsListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -28,7 +28,7 @@
         android:clickable="true"
         android:elevation="8dp"
         android:focusable="true"
-        android:onClick="@{() -> callback.onClick()}"
+        android:onClick="@{() -> listener.onClick()}"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
         app:strokeColor="@color/black"

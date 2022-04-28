@@ -9,20 +9,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemSeasonBinding
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.rest_api.SeasonItem
 
-class SeasonsAdapter(val tv_name: String, val tv_id: Int) : ListAdapter<SeasonItem, SeasonsAdapter.SeasonViewHolder>(SeasonDiffCallBack()) {
+class SeasonsAdapter(private val tvName: String, private val tvId: Int) : ListAdapter<SeasonItem, SeasonsAdapter.SeasonViewHolder>(SeasonDiffCallBack()) {
     private val castList: ArrayList<SeasonItem> = ArrayList()
 
     class SeasonViewHolder(var binding: ItemSeasonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(name: String, id: Int, season: SeasonItem) {
             binding.season = season
-            binding.callback = IDetails {
-                val args = Bundle()
-                args.putString("tvShowName", name)
-                args.putInt("tvShowId", id)
-                args.putInt("season", season.season_number)
+            binding.callback = DetailsListener {
+                val args = Bundle().apply {
+                    putString("tvShowName", name)
+                    putInt("tvShowId", id)
+                    putInt("season", season.season_number)
+                }
 
                 binding.seasonCard.findNavController().navigate(R.id.tvShowSeasonFragment, args)
             }
@@ -43,7 +44,7 @@ class SeasonsAdapter(val tv_name: String, val tv_id: Int) : ListAdapter<SeasonIt
 
     override fun onBindViewHolder(holder: SeasonViewHolder, position: Int) {
         val item = castList[position]
-        holder.bind(tv_name, tv_id, item)
+        holder.bind(tvName, tvId, item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeasonViewHolder {

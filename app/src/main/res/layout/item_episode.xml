@@ -15,7 +15,7 @@
 
         <variable
             name="callback"
-            type="com.mendelin.tmdb_hilt.common.IDetails" />
+            type="com.mendelin.tmdb_hilt.common.DetailsListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

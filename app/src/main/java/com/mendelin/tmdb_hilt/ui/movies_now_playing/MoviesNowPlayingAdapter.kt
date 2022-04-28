@@ -3,38 +3,37 @@ package com.mendelin.tmdb_hilt.ui.movies_now_playing
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemMovieListResultBinding
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MoviesNowPlayingAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<MovieListResultEntity, MoviesNowPlayingAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
+class MoviesNowPlayingAdapter(val callback: FavoritesCallback) : PagingDataAdapter<MovieListResultEntity, MoviesNowPlayingAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
+
     inner class NowPlayingMoviesViewHolder(var binding: ItemMovieListResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieListResultEntity) {
-            binding.property = movie
-            binding.callback = IDetails {
-                val navController = Navigation.findNavController(binding.root)
+            binding.apply {
+                property = movie
+                listener = DetailsListener {
+                    val args = Bundle()
+                    args.putInt("movieId", movie.id)
 
-                val args = Bundle()
-                args.putInt("movieId", movie.id)
+                    movieCard.findNavController().navigate(R.id.movieDetailsFragment, args)
+                }
 
-                navController.navigate(R.id.movieDetailsFragment, args)
-            }
-
-            binding.btnFavoriteMovie.isChecked = repository.isFavoriteMovie(movie.id)
-
-            binding.btnFavoriteMovie.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    repository.insertFavoriteMovie(movie)
+                btnFavoriteMovie.isChecked = callback.isFavoriteMovie(movie.id)
+                btnFavoriteMovie.setOnClickListener {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        callback.insertFavoriteMovie(movie)
+                    }
                 }
             }
 

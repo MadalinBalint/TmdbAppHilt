@@ -11,9 +11,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentMoviesNowPlayingBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +27,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoviesNowPlayingFragment : Fragment() {
-    private val viewModel by viewModels<MoviesNowPlayingViewModel>()
-
-    private var binding: FragmentMoviesNowPlayingBinding? = null
-
-    @Inject
-    lateinit var moviesNowPlayingAdapter: MoviesNowPlayingAdapter
-
     @Inject
     lateinit var preferences: PreferencesRepository
+
+    private val viewModel: MoviesNowPlayingViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private var binding: FragmentMoviesNowPlayingBinding? = null
+    lateinit var moviesNowPlayingAdapter: MoviesNowPlayingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +77,8 @@ class MoviesNowPlayingFragment : Fragment() {
     }
 
     private fun setupUI() {
+        moviesNowPlayingAdapter = MoviesNowPlayingAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerNowPlayingMovies?.apply {
             adapter = moviesNowPlayingAdapter
             layoutManager = LinearLayoutManager(requireActivity())

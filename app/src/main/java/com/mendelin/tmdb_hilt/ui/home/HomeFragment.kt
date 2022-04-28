@@ -11,9 +11,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentHomeBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +27,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private val viewModel by viewModels<HomeViewModel>()
-
     @Inject
     lateinit var preferences: PreferencesRepository
 
+    private val homeViewModel by viewModels<HomeViewModel>()
+    private val favoritesViewModel by viewModels<FavoritesViewModel>()
     private var binding: FragmentHomeBinding? = null
-
-    @Inject
-    lateinit var movieTopRatedAdapter: HomeAdapter
+    private lateinit var movieTopRatedAdapter: HomeAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
         /* Restore last position */
         CoroutineScope(Dispatchers.Main).launch {
             binding?.recyclerTopRatedMovies?.apply {
-                if (viewModel.firstLoad) delay(200)
+                if (homeViewModel.firstLoad) delay(200)
                 scrollToPosition(preferences.getPostion(PreferencesRepository.KEY_HOME, 0).first())
             }
         }
@@ -68,12 +68,14 @@ class HomeFragment : Fragment() {
             preferences.updatePosition(PreferencesRepository.KEY_HOME, pos)
         }
 
-        viewModel.firstLoad = false
+        homeViewModel.firstLoad = false
 
         super.onPause()
     }
 
     private fun setupUI() {
+        movieTopRatedAdapter = HomeAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerTopRatedMovies?.apply {
             adapter = movieTopRatedAdapter
             layoutManager = LinearLayoutManager(requireActivity())
@@ -94,24 +96,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.getErrorFilter().observe(viewLifecycleOwner) {
+        homeViewModel.getErrorFilter().observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 Snackbar.make(binding?.frameLayout!!, it, Snackbar.LENGTH_LONG)
                     .setAction("Retry") {
                         movieTopRatedAdapter.refresh()
                     }
                     .show()
-                viewModel.onErrorHandled()
+                homeViewModel.onErrorHandled()
             }
         }
 
-        viewModel.getLoadingObservable().observe(viewLifecycleOwner) {
+        homeViewModel.getLoadingObservable().observe(viewLifecycleOwner) {
             binding?.progressHome?.visibility = if (it == true) View.VISIBLE else View.INVISIBLE
         }
 
         lifecycleScope.launch {
             movieTopRatedAdapter.loadStateFlow.collectLatest { state ->
-                viewModel.isLoading.value = state.refresh is LoadState.Loading
+                homeViewModel.isLoading.value = state.refresh is LoadState.Loading
 
                 val errorState = state.refresh as? LoadState.Error
                     ?: state.source.append as? LoadState.Error
@@ -120,13 +122,13 @@ class HomeFragment : Fragment() {
                     ?: state.prepend as? LoadState.Error
 
                 errorState?.let {
-                    viewModel.error.value = it.error.message
+                    homeViewModel.error.value = it.error.message
                 }
             }
         }
 
         lifecycleScope.launch {
-            viewModel.topRatedMovies.collectLatest {
+            homeViewModel.topRatedMovies.collectLatest {
                 movieTopRatedAdapter.submitData(it)
             }
         }

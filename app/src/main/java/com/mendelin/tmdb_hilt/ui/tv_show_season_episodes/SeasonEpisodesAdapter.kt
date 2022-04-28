@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemEpisodeBinding
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.rest_api.EpisodeItem
 
 class SeasonEpisodesAdapter : ListAdapter<EpisodeItem, SeasonEpisodesAdapter.SeasonEpisodeViewHolder>(SeasonEpisodeDiffCallBack()) {
@@ -15,7 +15,7 @@ class SeasonEpisodesAdapter : ListAdapter<EpisodeItem, SeasonEpisodesAdapter.Sea
     class SeasonEpisodeViewHolder(var binding: ItemEpisodeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(episode: EpisodeItem) {
             binding.episode = episode
-            binding.callback = IDetails {
+            binding.callback = DetailsListener {
                 /*val args = Bundle()
                 args.putInt("seasonId", season.id)
 

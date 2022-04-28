@@ -9,20 +9,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemCastBinding
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.rest_api.CastItem
 
 class CastAdapter(val isMovieCast: Boolean = true) : ListAdapter<CastItem, CastAdapter.CastViewHolder>(CastDiffCallBack()) {
     private val castList: ArrayList<CastItem> = ArrayList()
 
     class CastViewHolder(var binding: ItemCastBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(cast: CastItem) {
-            binding.cast = cast
-            binding.callback = IDetails {
-                val args = Bundle()
-                args.putInt("personId", cast.id)
+        fun bind(actor: CastItem) {
+            binding.apply {
+                cast = actor
+                callback = DetailsListener {
+                    val args = Bundle()
+                    args.putInt("personId", actor.id)
 
-                binding.castCard.findNavController().navigate(R.id.personFragment, args)
+                    castCard.findNavController().navigate(R.id.personFragment, args)
+                }
             }
 
             binding.executePendingBindings()

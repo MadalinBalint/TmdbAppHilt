@@ -9,21 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.databinding.FragmentFavoritesBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
     private val viewModel: FavoritesViewModel by viewModels()
     private var binding: FragmentFavoritesBinding? = null
-    lateinit var favoritesAdapter: FavoritesAdapter
+    private lateinit var favoritesAdapter: FavoritesAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
@@ -36,7 +33,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setupUI() {
-        favoritesAdapter = FavoritesAdapter(viewModel)
+        favoritesAdapter = FavoritesAdapter(Utils.getFavoritesCallback(viewModel))
 
         binding?.recyclerFavorites?.apply {
             adapter = favoritesAdapter
@@ -75,7 +72,7 @@ class FavoritesFragment : Fragment() {
             binding?.progressFavorites?.visibility = if (it == true) View.VISIBLE else View.INVISIBLE
         }
 
-        viewModel.favoritesList.observe(viewLifecycleOwner) { list ->
+        viewModel.getFavoritesList().observe(viewLifecycleOwner) { list ->
             list?.let {
                 favoritesAdapter.setList(it)
             }

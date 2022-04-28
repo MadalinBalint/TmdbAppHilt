@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemCreditBinding
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.rest_api.MovieCreditsCastItem
 
 class CreditsAdapter : ListAdapter<MovieCreditsCastItem, CreditsAdapter.CreditsViewHolder>(CreditsDiffCallBack()) {
@@ -18,7 +18,7 @@ class CreditsAdapter : ListAdapter<MovieCreditsCastItem, CreditsAdapter.CreditsV
     class CreditsViewHolder(var binding: ItemCreditBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(credit: MovieCreditsCastItem) {
             binding.cast = credit
-            binding.callback = IDetails {
+            binding.callback = DetailsListener {
                 val args = Bundle()
                 args.putInt("movieId", credit.id)
 

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemTvListResultBinding
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import kotlinx.coroutines.CoroutineScope
@@ -21,21 +21,24 @@ class TvOnTheAirAdapter @Inject constructor(val repository: FavoritesRepository)
 
     inner class NowPlayingMoviesViewHolder(var binding: ItemTvListResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tvShow: TvListResultEntity) {
-            binding.property = tvShow
+            binding.apply {
+                property = tvShow
 
-            binding.callback = IDetails {
-                val args = Bundle()
-                args.putString("tvShowName", tvShow.name)
-                args.putInt("tvShowId", tvShow.id)
+                listener = DetailsListener {
+                    val args = Bundle().apply {
+                        putString("tvShowName", tvShow.name)
+                        putInt("tvShowId", tvShow.id)
+                    }
 
-                binding.tvListCard.findNavController().navigate(R.id.tvShowDetailsFragment, args)
-            }
+                    tvListCard.findNavController().navigate(R.id.tvShowDetailsFragment, args)
+                }
 
-            binding.btnFavoriteTvShow.isChecked = repository.isFavoriteTvShow(tvShow.id)
+                btnFavoriteTvShow.isChecked = repository.isFavoriteTvShow(tvShow.id)
 
-            binding.btnFavoriteTvShow.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    repository.insertFavoriteTvShow(tvShow)
+                btnFavoriteTvShow.setOnClickListener {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        repository.insertFavoriteTvShow(tvShow)
+                    }
                 }
             }
 

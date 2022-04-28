@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class FavoritesRepository @Inject constructor(val dataSource: FavoritesDao) {
+class FavoritesRepository @Inject constructor(private val dataSource: FavoritesDao) {
     /* Movies */
     suspend fun insertFavoriteMovie(movie: MovieListResultEntity) {
         dataSource.insertFavoriteMovie(movie)

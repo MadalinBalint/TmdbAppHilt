@@ -9,31 +9,31 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mendelin.tmdb_hilt.ItemMovieListResultBinding
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.IDetails
+import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MoviesPopularAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<MovieListResultEntity, MoviesPopularAdapter.PopularMoviesViewHolder>(PopulargMoviesDiffCallBack()) {
+class MoviesPopularAdapter(val callback: FavoritesCallback) : PagingDataAdapter<MovieListResultEntity, MoviesPopularAdapter.PopularMoviesViewHolder>(PopulargMoviesDiffCallBack()) {
+
     inner class PopularMoviesViewHolder(var binding: ItemMovieListResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieListResultEntity) {
-            binding.property = movie
+            binding.apply {
+                property = movie
+                listener = DetailsListener {
+                    val args = Bundle()
+                    args.putInt("movieId", movie.id)
 
-            binding.callback = IDetails {
-                val args = Bundle()
-                args.putInt("movieId", movie.id)
+                    movieCard.findNavController().navigate(R.id.movieDetailsFragment, args)
+                }
 
-                binding.movieCard.findNavController().navigate(R.id.movieDetailsFragment, args)
-            }
-
-            binding.btnFavoriteMovie.isChecked = repository.isFavoriteMovie(movie.id)
-
-            binding.btnFavoriteMovie.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    repository.insertFavoriteMovie(movie)
+                btnFavoriteMovie.isChecked = callback.isFavoriteMovie(movie.id)
+                btnFavoriteMovie.setOnClickListener {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        callback.insertFavoriteMovie(movie)
+                    }
                 }
             }
 

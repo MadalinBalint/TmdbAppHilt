@@ -11,9 +11,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentMoviesPopularBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,14 +27,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoviesPopularFragment : Fragment() {
-    private val viewModel by viewModels<MoviesPopularViewModel>()
-    private var binding: FragmentMoviesPopularBinding? = null
-
-    @Inject
-    lateinit var moviesPopularAdapter: MoviesPopularAdapter
-
     @Inject
     lateinit var preferences: PreferencesRepository
+
+    private val viewModel by viewModels<MoviesPopularViewModel>()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private var binding: FragmentMoviesPopularBinding? = null
+    lateinit var moviesPopularAdapter: MoviesPopularAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +77,8 @@ class MoviesPopularFragment : Fragment() {
     }
 
     private fun setupUI() {
+        moviesPopularAdapter = MoviesPopularAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerPopularMovies?.apply {
             adapter = moviesPopularAdapter
             layoutManager = LinearLayoutManager(requireActivity())

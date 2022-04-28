@@ -11,9 +11,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentMoviesUpcomingBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +27,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoviesUpcomingFragment : Fragment() {
-    private val viewModel by viewModels<MoviesUpcomingViewModel>()
-
-    private var binding: FragmentMoviesUpcomingBinding? = null
-
-    @Inject
-    lateinit var moviesUpcomingAdapter: MoviesUpcomingAdapter
-
     @Inject
     lateinit var preferences: PreferencesRepository
+
+    private val viewModel: MoviesUpcomingViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private var binding: FragmentMoviesUpcomingBinding? = null
+    lateinit var moviesUpcomingAdapter: MoviesUpcomingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +77,8 @@ class MoviesUpcomingFragment : Fragment() {
     }
 
     private fun setupUI() {
+        moviesUpcomingAdapter = MoviesUpcomingAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerUpcomingMovies?.apply {
             adapter = moviesUpcomingAdapter
             layoutManager = LinearLayoutManager(requireActivity())
