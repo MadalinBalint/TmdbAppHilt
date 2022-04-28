@@ -13,7 +13,7 @@ ext {
     retrofit_version = "2.9.0"
     room_version = "2.4.2"
     glide_version = "4.13.1"
-    hilt_version = "2.40"
+    hilt_version = '2.41'
     paging_version = "3.1.1"
 }
 
@@ -117,7 +117,12 @@ android {
     }
 
     kapt {
-        useBuildCache = true
+        useBuildCache true
+        correctErrorTypes true
+    }
+
+    hilt {
+        enableAggregatingTask = true
     }
 
     packagingOptions {
@@ -166,10 +171,12 @@ dependencies {
     /* Retrofit networking library */
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
 
     /* Room database */
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     /* Image handling */
@@ -189,4 +196,8 @@ dependencies {
 
     /* Datastore */
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    /* RxJava */
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
+    implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
 }
