@@ -13,13 +13,15 @@ class SeasonEpisodesAdapter : ListAdapter<EpisodeItem, SeasonEpisodesAdapter.Sea
     private val castList: ArrayList<EpisodeItem> = ArrayList()
 
     class SeasonEpisodeViewHolder(var binding: ItemEpisodeBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(episode: EpisodeItem) {
-            binding.episode = episode
-            binding.callback = DetailsListener {
-                /*val args = Bundle()
-                args.putInt("seasonId", season.id)
+        fun bind(seasonEpisode: EpisodeItem) {
+            binding.apply {
+                episode = seasonEpisode
+                listener = DetailsListener {
+                    /*val args = Bundle()
+                    args.putInt("seasonId", season.id)
 
-                binding.episodeCard.findNavController().navigate(R.id.personFragment, args)*/
+                    episodeCard.findNavController().navigate(R.id.personFragment, args)*/
+                }
             }
 
             binding.executePendingBindings()

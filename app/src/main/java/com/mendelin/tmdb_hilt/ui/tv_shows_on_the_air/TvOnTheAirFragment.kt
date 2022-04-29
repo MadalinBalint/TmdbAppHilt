@@ -11,9 +11,12 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvOnTheAirBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
+import com.mendelin.tmdb_hilt.ui.movies_upcoming.MoviesUpcomingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,14 +28,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TvOnTheAirFragment : Fragment() {
-    private val viewModel by viewModels<TvOnTheAirViewModel>()
-    private var binding: FragmentTvOnTheAirBinding? = null
-
-    @Inject
-    lateinit var tvOnTheAirAdapter: TvOnTheAirAdapter
-
     @Inject
     lateinit var preferences: PreferencesRepository
+
+    private val viewModel: TvOnTheAirViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private var binding: FragmentTvOnTheAirBinding? = null
+    lateinit var tvOnTheAirAdapter: TvOnTheAirAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +78,8 @@ class TvOnTheAirFragment : Fragment() {
     }
 
     private fun setupUI() {
+        tvOnTheAirAdapter = TvOnTheAirAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerOnTheAirTvShows?.apply {
             adapter = tvOnTheAirAdapter
             layoutManager = LinearLayoutManager(requireActivity())

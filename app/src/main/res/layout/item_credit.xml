@@ -14,7 +14,7 @@
             type="com.mendelin.tmdb_hilt.data.model.rest_api.MovieCreditsCastItem" />
 
         <variable
-            name="callback"
+            name="listener"
             type="com.mendelin.tmdb_hilt.common.DetailsListener" />
     </data>
 
@@ -27,7 +27,7 @@
         android:focusable="true"
         app:strokeColor="@color/black"
         app:strokeWidth="0.5dp"
-        android:onClick="@{() -> callback.onClick()}"
+        android:onClick="@{() -> listener.onClick()}"
         android:shadowRadius="0"
         app:cardCornerRadius="4dp">
 

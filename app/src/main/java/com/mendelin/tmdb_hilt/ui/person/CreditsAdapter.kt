@@ -17,12 +17,14 @@ class CreditsAdapter : ListAdapter<MovieCreditsCastItem, CreditsAdapter.CreditsV
 
     class CreditsViewHolder(var binding: ItemCreditBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(credit: MovieCreditsCastItem) {
-            binding.cast = credit
-            binding.callback = DetailsListener {
-                val args = Bundle()
-                args.putInt("movieId", credit.id)
+            binding.apply {
+                cast = credit
+                listener = DetailsListener {
+                    val args = Bundle()
+                    args.putInt("movieId", credit.id)
 
-                binding.creditsCard.findNavController().navigate(R.id.movieDetailsFragment, args)
+                    creditsCard.findNavController().navigate(R.id.movieDetailsFragment, args)
+                }
             }
 
             binding.executePendingBindings()

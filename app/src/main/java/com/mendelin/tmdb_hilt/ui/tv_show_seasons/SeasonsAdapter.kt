@@ -16,16 +16,18 @@ class SeasonsAdapter(private val tvName: String, private val tvId: Int) : ListAd
     private val castList: ArrayList<SeasonItem> = ArrayList()
 
     class SeasonViewHolder(var binding: ItemSeasonBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(name: String, id: Int, season: SeasonItem) {
-            binding.season = season
-            binding.callback = DetailsListener {
-                val args = Bundle().apply {
-                    putString("tvShowName", name)
-                    putInt("tvShowId", id)
-                    putInt("season", season.season_number)
-                }
+        fun bind(name: String, id: Int, tvShowSeason: SeasonItem) {
+            binding.apply {
+                season = tvShowSeason
+                callback = DetailsListener {
+                    val args = Bundle().apply {
+                        putString("tvShowName", name)
+                        putInt("tvShowId", id)
+                        putInt("season", tvShowSeason.season_number)
+                    }
 
-                binding.seasonCard.findNavController().navigate(R.id.tvShowSeasonFragment, args)
+                    seasonCard.findNavController().navigate(R.id.tvShowSeasonFragment, args)
+                }
             }
 
             binding.executePendingBindings()

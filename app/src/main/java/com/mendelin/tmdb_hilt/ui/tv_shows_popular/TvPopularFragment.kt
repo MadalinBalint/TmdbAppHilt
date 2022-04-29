@@ -11,9 +11,12 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvPopularBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
+import com.mendelin.tmdb_hilt.ui.tv_shows_on_the_air.TvOnTheAirAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,19 +28,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TvPopularFragment : Fragment() {
-    private val viewModel by viewModels<TvPopularViewModel>()
-    private var binding: FragmentTvPopularBinding? = null
-
-    @Inject
-    lateinit var tvPopularAdapter: TvPopularAdapter
-
     @Inject
     lateinit var preferences: PreferencesRepository
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val viewModel: TvPopularViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private var binding: FragmentTvPopularBinding? = null
+    lateinit var tvPopularAdapter: TvPopularAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentTvPopularBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
@@ -76,6 +75,8 @@ class TvPopularFragment : Fragment() {
     }
 
     private fun setupUI() {
+        tvPopularAdapter = TvPopularAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerPopularTvShows?.apply {
             adapter = tvPopularAdapter
             layoutManager = LinearLayoutManager(requireActivity())

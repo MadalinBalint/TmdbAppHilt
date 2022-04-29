@@ -11,9 +11,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
+import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvTopRatedBinding
 import com.mendelin.tmdb_hilt.ui.custom_view.MarginItemVerticalDecoration
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,14 +27,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TvTopRatedFragment : Fragment() {
-    private val viewModel by viewModels<TvTopRatedViewModel>()
-    private var binding: FragmentTvTopRatedBinding? = null
-
-    @Inject
-    lateinit var tvTopRatedAdapter: TvTopRatedAdapter
-
     @Inject
     lateinit var preferences: PreferencesRepository
+
+    private val viewModel: TvTopRatedViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private var binding: FragmentTvTopRatedBinding? = null
+    lateinit var tvTopRatedAdapter: TvTopRatedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +77,8 @@ class TvTopRatedFragment : Fragment() {
     }
 
     private fun setupUI() {
+        tvTopRatedAdapter = TvTopRatedAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+
         binding?.recyclerTopRatedTvShows?.apply {
             adapter = tvTopRatedAdapter
             layoutManager = LinearLayoutManager(requireActivity())

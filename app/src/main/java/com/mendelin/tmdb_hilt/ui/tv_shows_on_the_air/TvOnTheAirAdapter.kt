@@ -11,13 +11,12 @@ import com.mendelin.tmdb_hilt.ItemTvListResultBinding
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.DetailsListener
 import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
-import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
+import com.mendelin.tmdb_hilt.ui.favorites.FavoritesCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class TvOnTheAirAdapter @Inject constructor(val repository: FavoritesRepository) : PagingDataAdapter<TvListResultEntity, TvOnTheAirAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
+class TvOnTheAirAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvListResultEntity, TvOnTheAirAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
 
     inner class NowPlayingMoviesViewHolder(var binding: ItemTvListResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tvShow: TvListResultEntity) {
@@ -33,11 +32,10 @@ class TvOnTheAirAdapter @Inject constructor(val repository: FavoritesRepository)
                     tvListCard.findNavController().navigate(R.id.tvShowDetailsFragment, args)
                 }
 
-                btnFavoriteTvShow.isChecked = repository.isFavoriteTvShow(tvShow.id)
-
+                btnFavoriteTvShow.isChecked = callback.isFavoriteTvShow(tvShow.id)
                 btnFavoriteTvShow.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch {
-                        repository.insertFavoriteTvShow(tvShow)
+                        callback.insertFavoriteTvShow(tvShow)
                     }
                 }
             }

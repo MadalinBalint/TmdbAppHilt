@@ -17,7 +17,6 @@ import timber.log.Timber
 @AndroidEntryPoint
 class PersonFragment : Fragment() {
     private val viewModel by viewModels<PersonViewModel>()
-
     private var binding: FragmentPersonBinding? = null
     private lateinit var creditsAdapter: CreditsAdapter
     private val args: PersonFragmentArgs by navArgs()
