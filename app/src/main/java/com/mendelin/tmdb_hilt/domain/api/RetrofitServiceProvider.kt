@@ -25,9 +25,16 @@ object RetrofitServiceProvider {
             connectTimeout(60, TimeUnit.SECONDS)
             addInterceptor(
                 Interceptor { chain ->
-                    val builder = chain.request().newBuilder()
+                    val request = chain.request()
+                    val url = request.url()
+                    val builder = request.newBuilder()
+
                     builder.header("accept", "*/*")
                     builder.header("Content-Type", "application/json")
+                    builder.url(url.newBuilder()
+                        .addQueryParameter(BuildConfig.QUERY_API_KEY, BuildConfig.TMDB_API_KEY)
+                        .build()
+                    )
 
                     var response = chain.proceed(builder.build())
 
