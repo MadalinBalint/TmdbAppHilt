@@ -11,6 +11,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.databinding.FragmentFavoritesBinding
+import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,6 +76,14 @@ class FavoritesFragment : Fragment() {
 
         viewModel.getFavoritesList().observe(viewLifecycleOwner) { list ->
             list?.let {
+                it.forEach { item ->
+                    when (item.content) {
+                        is MovieListResultEntity ->
+                            item.content.isFavorite = viewModel.repository.isFavoriteMovie(item.content.id)
+                        is TvListResultEntity ->
+                            item.content.isFavorite = viewModel.repository.isFavoriteTvShow(item.content.id)
+                    }
+                }
                 favoritesAdapter.setList(it)
             }
         }

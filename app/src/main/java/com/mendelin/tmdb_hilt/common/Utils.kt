@@ -1,5 +1,8 @@
 package com.mendelin.tmdb_hilt.common
 
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.presentation.favorites.FavoritesCallback
@@ -22,20 +25,12 @@ object Utils {
                 viewModel.repository.insertFavoriteMovie(movie)
             }
 
-            override fun isFavoriteMovie(id: Int): Boolean {
-                return viewModel.repository.isFavoriteMovie(id)
-            }
-
             override suspend fun deleteFavoriteMovie(id: Int) {
                 viewModel.repository.deleteFavoriteMovie(id)
             }
 
             override suspend fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
                 viewModel.repository.insertFavoriteTvShow(tvShow)
-            }
-
-            override fun isFavoriteTvShow(id: Int): Boolean {
-                return viewModel.repository.isFavoriteTvShow(id)
             }
 
             override suspend fun deleteFavoriteTvShow(id: Int) {
@@ -46,4 +41,18 @@ object Utils {
                 viewModel.fetchFavoritesList()
             }
         }
+
+    fun PagingData<MovieListResultEntity>.setFavoriteMovies(repository: FavoritesRepository): PagingData<MovieListResultEntity> {
+        return this.map {
+            it.isFavorite = repository.isFavoriteMovie(it.id)
+            it
+        }
+    }
+
+    fun PagingData<TvListResultEntity>.setFavoriteTvShows(repository: FavoritesRepository): PagingData<TvListResultEntity> {
+        return this.map {
+            it.isFavorite = repository.isFavoriteTvShow(it.id)
+            it
+        }
+    }
 }

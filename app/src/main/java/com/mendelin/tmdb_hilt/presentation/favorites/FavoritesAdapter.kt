@@ -35,7 +35,7 @@ class FavoritesAdapter(val callback: FavoritesCallback) : ListAdapter<MultipleIt
                     movieCard.findNavController().navigate(R.id.movieDetailsFragment, args)
                 }
 
-                btnFavoriteMovie.isChecked = true
+                btnFavoriteMovie.isChecked = movie.isFavorite
 
                 btnFavoriteMovie.setOnCheckedChangeListener { _, _ ->
                     CoroutineScope(Dispatchers.IO).launch {
