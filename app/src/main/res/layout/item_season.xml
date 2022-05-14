@@ -11,7 +11,7 @@
 
         <variable
             name="season"
-            type="com.mendelin.tmdb_hilt.data.model.rest_api.SeasonItem" />
+            type="com.mendelin.tmdb_hilt.domain.models.rest_api.SeasonItem" />
 
         <variable
             name="callback"

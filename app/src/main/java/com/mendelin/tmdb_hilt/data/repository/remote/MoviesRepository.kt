@@ -1,15 +1,15 @@
 package com.mendelin.tmdb_hilt.data.repository.remote
 
-import com.mendelin.tmdb_hilt.data.api.TmdbDataSource
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.model.response.CreditsResponse
-import com.mendelin.tmdb_hilt.data.model.response.MovieDetailsResponse
-import com.mendelin.tmdb_hilt.data.model.response.NowPlayingGenericResponse
-import com.mendelin.tmdb_hilt.data.model.response.PagedGenericResponse
+import com.mendelin.tmdb_hilt.data.TmdbDataSource
+import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.response.CreditsResponse
+import com.mendelin.tmdb_hilt.domain.models.response.MovieDetailsResponse
+import com.mendelin.tmdb_hilt.domain.models.response.NowPlayingGenericResponse
+import com.mendelin.tmdb_hilt.domain.models.response.PagedGenericResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class MoviesRepository @Inject constructor(val service: TmdbDataSource) {
+class MoviesRepository @Inject constructor(private val service: TmdbDataSource) {
     suspend fun getMovieDetails(movie_id: Int): Response<MovieDetailsResponse> =
         service.getMovieDetails(movie_id)
 

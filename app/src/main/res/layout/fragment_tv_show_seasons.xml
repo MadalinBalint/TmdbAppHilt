@@ -11,7 +11,7 @@
 
         <variable
             name="viewmodel"
-            type="com.mendelin.tmdb_hilt.ui.tv_show_seasons.TvShowSeasonsViewModel" />
+            type="com.mendelin.tmdb_hilt.presentation.tv_show_seasons.TvShowSeasonsViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

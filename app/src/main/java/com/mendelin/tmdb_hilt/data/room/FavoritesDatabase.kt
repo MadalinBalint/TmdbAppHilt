@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 

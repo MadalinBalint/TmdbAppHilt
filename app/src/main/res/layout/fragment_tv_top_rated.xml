@@ -9,7 +9,7 @@
         android:id="@+id/swipeTopRatedTvShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movies_upcoming.MoviesUpcomingFragment">
+        tools:context=".presentation.movies_upcoming.MoviesUpcomingFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerTopRatedTvShows"

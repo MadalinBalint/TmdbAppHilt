@@ -11,7 +11,7 @@
 
         <variable
             name="cast"
-            type="com.mendelin.tmdb_hilt.data.model.rest_api.CastItem" />
+            type="com.mendelin.tmdb_hilt.domain.models.rest_api.CastItem" />
 
         <variable
             name="callback"

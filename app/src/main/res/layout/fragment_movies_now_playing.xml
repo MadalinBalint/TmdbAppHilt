@@ -9,7 +9,7 @@
         android:id="@+id/swipeNowPlayingMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movies_now_playing.MoviesNowPlayingFragment">
+        tools:context=".presentation.movies_now_playing.MoviesNowPlayingFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerNowPlayingMovies"

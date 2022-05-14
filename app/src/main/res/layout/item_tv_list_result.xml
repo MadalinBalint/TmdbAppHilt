@@ -13,7 +13,7 @@
 
         <variable
             name="property"
-            type="com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity" />
+            type="com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity" />
 
         <variable
             name="listener"

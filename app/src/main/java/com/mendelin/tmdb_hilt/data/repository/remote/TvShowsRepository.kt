@@ -1,12 +1,12 @@
 package com.mendelin.tmdb_hilt.data.repository.remote
 
-import com.mendelin.tmdb_hilt.data.api.TmdbDataSource
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
-import com.mendelin.tmdb_hilt.data.model.response.*
+import com.mendelin.tmdb_hilt.data.TmdbDataSource
+import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.response.*
 import retrofit2.Response
 import javax.inject.Inject
 
-class TvShowsRepository @Inject constructor(val service: TmdbDataSource) {
+class TvShowsRepository @Inject constructor(private val service: TmdbDataSource) {
     suspend fun getTvShowDetails(tv_id: Int): Response<TvShowDetailsResponse> =
         service.getTvDetails(tv_id)
 

@@ -1,7 +1,7 @@
 package com.mendelin.tmdb_hilt.data.repository.local
 
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.data.room.FavoritesDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

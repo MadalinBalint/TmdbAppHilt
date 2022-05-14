@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "dc662557cc30d7fa945cd5f7d85270d2",
+    "identityHash": "ebe44abb05e9c2bcdeb2b4a3706a641d",
     "entities": [
       {
         "tableName": "favorite_movies",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`poster_path` TEXT, `adult` INTEGER NOT NULL, `overview` TEXT NOT NULL, `release_date` TEXT NOT NULL, `genre_ids` TEXT NOT NULL, `id` INTEGER NOT NULL, `original_title` TEXT NOT NULL, `original_language` TEXT NOT NULL, `title` TEXT NOT NULL, `backdrop_path` TEXT, `popularity` REAL NOT NULL, `vote_count` INTEGER NOT NULL, `video` INTEGER NOT NULL, `vote_average` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`poster_path` TEXT, `adult` INTEGER NOT NULL, `overview` TEXT NOT NULL, `release_date` TEXT NOT NULL, `genre_ids` TEXT NOT NULL, `id` INTEGER NOT NULL, `original_title` TEXT NOT NULL, `original_language` TEXT NOT NULL, `title` TEXT NOT NULL, `backdrop_path` TEXT, `popularity` REAL NOT NULL, `vote_count` INTEGER NOT NULL, `video` INTEGER NOT NULL, `vote_average` REAL NOT NULL, `isFavorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "poster_path",
@@ -91,6 +91,12 @@
             "columnName": "vote_average",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -104,7 +110,7 @@
       },
       {
         "tableName": "favorite_tvshows",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`poster_path` TEXT, `popularity` REAL NOT NULL, `id` INTEGER NOT NULL, `backdrop_path` TEXT, `vote_average` REAL NOT NULL, `overview` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `origin_country` TEXT NOT NULL, `genre_ids` TEXT NOT NULL, `original_language` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `name` TEXT NOT NULL, `original_name` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`poster_path` TEXT, `popularity` REAL NOT NULL, `id` INTEGER NOT NULL, `backdrop_path` TEXT, `vote_average` REAL NOT NULL, `overview` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `origin_country` TEXT NOT NULL, `genre_ids` TEXT NOT NULL, `original_language` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `name` TEXT NOT NULL, `original_name` TEXT NOT NULL, `isFavorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "poster_path",
@@ -183,6 +189,12 @@
             "columnName": "original_name",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -198,7 +210,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dc662557cc30d7fa945cd5f7d85270d2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ebe44abb05e9c2bcdeb2b4a3706a641d')"
     ]
   }
 }

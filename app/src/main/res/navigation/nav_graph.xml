@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.home.HomeFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.movies.MoviesFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.movies.MoviesFragment"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies">
         <action
@@ -27,19 +27,19 @@
 
     <fragment
         android:id="@+id/tvShowsFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.tv_shows.TvShowsFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.tv_shows.TvShowsFragment"
         android:label="TvShowsFragment"
         tools:layout="@layout/fragment_tv_shows" />
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.favorites.FavoritesFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.movie_details.MovieDetailsFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.movie_details.MovieDetailsFragment"
         android:label="MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details">
         <argument
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/moviesNowPlayingFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.movies_now_playing.MoviesNowPlayingFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.movies_now_playing.MoviesNowPlayingFragment"
         android:label="fragment_movies_now_playing"
         tools:layout="@layout/fragment_movies_now_playing">
         <action
@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/moviesPopularFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.movies_popular.MoviesPopularFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.movies_popular.MoviesPopularFragment"
         android:label="fragment_movies_popular"
         tools:layout="@layout/fragment_movies_popular">
         <action
@@ -69,7 +69,7 @@
 
     <fragment
         android:id="@+id/moviesUpcomingFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.movies_upcoming.MoviesUpcomingFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.movies_upcoming.MoviesUpcomingFragment"
         android:label="fragment_movies_upcoming"
         tools:layout="@layout/fragment_movies_upcoming">
         <action
@@ -79,25 +79,25 @@
 
     <fragment
         android:id="@+id/tvOnTheAirFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.tv_shows_on_the_air.TvOnTheAirFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.tv_shows_on_the_air.TvOnTheAirFragment"
         android:label="fragment_tv_on_the_air"
         tools:layout="@layout/fragment_tv_on_the_air" />
 
     <fragment
         android:id="@+id/tvPopularFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.tv_shows_popular.TvPopularFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.tv_shows_popular.TvPopularFragment"
         android:label="fragment_tv_popular"
         tools:layout="@layout/fragment_tv_popular" />
 
     <fragment
         android:id="@+id/tvTopRatedFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.tv_shows_top_rated.TvTopRatedFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.tv_shows_top_rated.TvTopRatedFragment"
         android:label="fragment_tv_top_rated"
         tools:layout="@layout/fragment_tv_top_rated" />
 
     <fragment
         android:id="@+id/tvShowDetailsFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.tv_show_seasons.TvShowSeasonsFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.tv_show_seasons.TvShowSeasonsFragment"
         android:label="TvShowDetailsFragment"
         tools:layout="@layout/fragment_tv_show_seasons">
         <argument
@@ -110,7 +110,7 @@
 
     <fragment
         android:id="@+id/personFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.person.PersonFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.person.PersonFragment"
         android:label="PersonFragment"
         tools:layout="@layout/fragment_person" >
         <argument
@@ -120,7 +120,7 @@
 
     <fragment
         android:id="@+id/tvShowSeasonFragment"
-        android:name="com.mendelin.tmdb_hilt.ui.tv_show_season_episodes.TvShowSeasonEpisodesFragment"
+        android:name="com.mendelin.tmdb_hilt.presentation.tv_show_season_episodes.TvShowSeasonEpisodesFragment"
         android:label="TvShowSeasonFragment"
         tools:layout="@layout/fragment_tv_show_season_episodes">
         <argument

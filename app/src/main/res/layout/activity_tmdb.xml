@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ui.TmdbActivity">
+    tools:context=".presentation.TmdbActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

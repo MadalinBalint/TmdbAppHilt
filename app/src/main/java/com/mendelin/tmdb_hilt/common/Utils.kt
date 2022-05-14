@@ -1,9 +1,9 @@
 package com.mendelin.tmdb_hilt.common
 
-import com.mendelin.tmdb_hilt.data.model.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.data.model.entity.TvListResultEntity
-import com.mendelin.tmdb_hilt.ui.favorites.FavoritesCallback
-import com.mendelin.tmdb_hilt.ui.favorites.FavoritesViewModel
+import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
+import com.mendelin.tmdb_hilt.presentation.favorites.FavoritesCallback
+import com.mendelin.tmdb_hilt.presentation.favorites.FavoritesViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 

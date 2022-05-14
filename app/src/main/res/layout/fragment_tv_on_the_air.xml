@@ -9,7 +9,7 @@
         android:id="@+id/swipeOnTheAirTvShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.tv_shows_on_the_air.TvOnTheAirFragment">
+        tools:context=".presentation.tv_shows_on_the_air.TvOnTheAirFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOnTheAirTvShows"

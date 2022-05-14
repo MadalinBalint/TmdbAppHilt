@@ -9,7 +9,7 @@
         android:id="@+id/swipePopularTvShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.tv_shows_popular.TvPopularFragment">
+        tools:context=".presentation.tv_shows_popular.TvPopularFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPopularTvShows"

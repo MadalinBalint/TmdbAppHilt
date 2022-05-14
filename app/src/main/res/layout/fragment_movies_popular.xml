@@ -9,7 +9,7 @@
         android:id="@+id/swipePopularMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movies_popular.MoviesPopularFragment">
+        tools:context=".presentation.movies_popular.MoviesPopularFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPopularMovies"

@@ -11,7 +11,7 @@
 
         <variable
             name="episode"
-            type="com.mendelin.tmdb_hilt.data.model.rest_api.EpisodeItem" />
+            type="com.mendelin.tmdb_hilt.domain.models.rest_api.EpisodeItem" />
 
         <variable
             name="listener"

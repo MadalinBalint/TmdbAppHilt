@@ -22,7 +22,7 @@
         tools:ignore="DataExtractionRules">
 
         <activity
-            android:name="com.mendelin.tmdb_hilt.ui.TmdbActivity"
+            android:name="com.mendelin.tmdb_hilt.presentation.TmdbActivity"
             android:configChanges="locale|orientation"
             android:exported="true"
             android:launchMode="singleTop"
