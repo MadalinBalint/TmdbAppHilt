@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
+import com.mendelin.tmdb_hilt.common.Utils.setFavoriteMovies
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentMoviesPopularBinding
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
@@ -131,8 +133,8 @@ class MoviesPopularFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.popularMovies.collectLatest {
-                moviesPopularAdapter.submitData(it)
+            viewModel.popularMovies.collectLatest { pagingData ->
+                moviesPopularAdapter.submitData(pagingData.setFavoriteMovies(viewModel.favorites))
             }
         }
     }

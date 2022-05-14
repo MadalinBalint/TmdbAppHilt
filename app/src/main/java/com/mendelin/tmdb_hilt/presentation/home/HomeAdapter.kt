@@ -29,10 +29,13 @@ class HomeAdapter constructor(val callback: FavoritesCallback) : PagingDataAdapt
                     movieCard.findNavController().navigate(R.id.movieDetailsFragment, args)
                 }
 
-                btnFavoriteMovie.isChecked = callback.isFavoriteMovie(movie.id)
                 btnFavoriteMovie.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch {
-                        callback.insertFavoriteMovie(movie)
+                        if (btnFavoriteMovie.isChecked) {
+                            callback.insertFavoriteMovie(movie)
+                        } else {
+                            callback.deleteFavoriteMovie(movie.id)
+                        }
                     }
                 }
             }

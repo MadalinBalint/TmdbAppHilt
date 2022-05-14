@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
+import com.mendelin.tmdb_hilt.common.Utils.setFavoriteMovies
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentHomeBinding
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
@@ -31,7 +32,7 @@ class HomeFragment : Fragment() {
     lateinit var preferences: PreferencesRepository
 
     private val homeViewModel by viewModels<HomeViewModel>()
-    private val favoritesViewModel by viewModels<FavoritesViewModel>()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
     private var binding: FragmentHomeBinding? = null
     private lateinit var movieTopRatedAdapter: HomeAdapter
 
@@ -128,8 +129,8 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            homeViewModel.topRatedMovies.collectLatest {
-                movieTopRatedAdapter.submitData(it)
+            homeViewModel.topRatedMovies.collectLatest { pagingData ->
+                movieTopRatedAdapter.submitData(pagingData.setFavoriteMovies(homeViewModel.favorites))
             }
         }
     }

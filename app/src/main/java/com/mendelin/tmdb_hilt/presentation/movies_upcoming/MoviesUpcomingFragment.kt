@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
+import com.mendelin.tmdb_hilt.common.Utils.setFavoriteMovies
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentMoviesUpcomingBinding
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
@@ -131,8 +132,8 @@ class MoviesUpcomingFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.upcomingMovies.collectLatest {
-                moviesUpcomingAdapter.submitData(it)
+            viewModel.upcomingMovies.collectLatest { pagingData ->
+                moviesUpcomingAdapter.submitData(pagingData.setFavoriteMovies(viewModel.favorites))
             }
         }
     }
