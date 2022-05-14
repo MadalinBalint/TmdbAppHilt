@@ -16,9 +16,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TvOnTheAirAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvListResultEntity, TvOnTheAirAdapter.NowPlayingMoviesViewHolder>(NowPlayingMoviesDiffCallBack()) {
+class TvOnTheAirAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvListResultEntity, TvOnTheAirAdapter.TvOnTheAirViewHolder>(TvOnTheAirDiffCallBack()) {
 
-    inner class NowPlayingMoviesViewHolder(var binding: ItemTvListResultBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TvOnTheAirViewHolder(var binding: ItemTvListResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tvShow: TvListResultEntity) {
             binding.apply {
                 property = tvShow
@@ -32,10 +32,13 @@ class TvOnTheAirAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvL
                     tvListCard.findNavController().navigate(R.id.tvShowDetailsFragment, args)
                 }
 
-                btnFavoriteTvShow.isChecked = callback.isFavoriteTvShow(tvShow.id)
                 btnFavoriteTvShow.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch {
-                        callback.insertFavoriteTvShow(tvShow)
+                        if (btnFavoriteTvShow.isChecked) {
+                            callback.insertFavoriteTvShow(tvShow)
+                        } else {
+                            callback.deleteFavoriteTvShow(tvShow.id)
+                        }
                     }
                 }
             }
@@ -44,7 +47,7 @@ class TvOnTheAirAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvL
         }
     }
 
-    class NowPlayingMoviesDiffCallBack : DiffUtil.ItemCallback<TvListResultEntity>() {
+    class TvOnTheAirDiffCallBack : DiffUtil.ItemCallback<TvListResultEntity>() {
         override fun areItemsTheSame(oldItem: TvListResultEntity, newItem: TvListResultEntity): Boolean {
             return oldItem.name == newItem.name
         }
@@ -54,11 +57,11 @@ class TvOnTheAirAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvL
         }
     }
 
-    override fun onBindViewHolder(holder: NowPlayingMoviesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvOnTheAirViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingMoviesViewHolder {
-        return NowPlayingMoviesViewHolder(ItemTvListResultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvOnTheAirViewHolder {
+        return TvOnTheAirViewHolder(ItemTvListResultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 }

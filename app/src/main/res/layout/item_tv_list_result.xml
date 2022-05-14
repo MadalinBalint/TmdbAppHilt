@@ -78,6 +78,7 @@
                     android:layout_gravity="top|end"
                     android:layout_margin="8dp"
                     android:button="@drawable/favorite_states"
+                    android:checked="@{property.isFavorite}"
                     android:minWidth="0dp"
                     android:minHeight="0dp" />
 

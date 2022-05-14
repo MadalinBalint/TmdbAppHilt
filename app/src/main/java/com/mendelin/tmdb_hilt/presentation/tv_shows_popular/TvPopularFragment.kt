@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
+import com.mendelin.tmdb_hilt.common.Utils.setFavoriteTvShows
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvPopularBinding
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
@@ -128,8 +129,8 @@ class TvPopularFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.popularTvShows.collectLatest {
-                tvPopularAdapter.submitData(it)
+            viewModel.popularTvShows.collectLatest { pagingData ->
+                tvPopularAdapter.submitData(pagingData.setFavoriteTvShows(viewModel.favorites))
             }
         }
     }

@@ -32,10 +32,13 @@ class TvPopularAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvLi
                     tvListCard.findNavController().navigate(R.id.tvShowDetailsFragment, args)
                 }
 
-                btnFavoriteTvShow.isChecked = callback.isFavoriteTvShow(tvShow.id)
                 btnFavoriteTvShow.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch {
-                        callback.insertFavoriteTvShow(tvShow)
+                        if (btnFavoriteTvShow.isChecked) {
+                            callback.insertFavoriteTvShow(tvShow)
+                        } else {
+                            callback.deleteFavoriteTvShow(tvShow.id)
+                        }
                     }
                 }
             }
@@ -52,7 +55,6 @@ class TvPopularAdapter(val callback: FavoritesCallback) : PagingDataAdapter<TvLi
         override fun areContentsTheSame(oldItem: TvListResultEntity, newItem: TvListResultEntity): Boolean {
             return oldItem == newItem
         }
-
     }
 
     override fun onBindViewHolder(holder: TvPopularViewHolder, position: Int) {
