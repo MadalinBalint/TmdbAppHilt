@@ -32,7 +32,10 @@ object RetrofitServiceProvider {
                     builder.header("accept", "*/*")
                     builder.header("Content-Type", "application/json")
                     builder.url(url.newBuilder()
+                        /* API key */
                         .addQueryParameter(BuildConfig.QUERY_API_KEY, BuildConfig.TMDB_API_KEY)
+                        /* default language */
+                        .addQueryParameter(BuildConfig.QUERY_LANGUAGE, "en-US")
                         .build()
                     )
 
