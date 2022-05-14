@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.common.Utils.setFavoriteMovies
+import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentHomeBinding
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
@@ -114,17 +114,7 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             movieTopRatedAdapter.loadStateFlow.collectLatest { state ->
-                homeViewModel.isLoading.value = state.refresh is LoadState.Loading
-
-                val errorState = state.refresh as? LoadState.Error
-                    ?: state.source.append as? LoadState.Error
-                    ?: state.source.prepend as? LoadState.Error
-                    ?: state.append as? LoadState.Error
-                    ?: state.prepend as? LoadState.Error
-
-                errorState?.let {
-                    homeViewModel.error.value = it.error.message
-                }
+                state.setUiState(homeViewModel)
             }
         }
 

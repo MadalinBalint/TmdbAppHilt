@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils
 import com.mendelin.tmdb_hilt.common.Utils.setFavoriteTvShows
+import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvOnTheAirBinding
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
@@ -117,17 +117,7 @@ class TvOnTheAirFragment : Fragment() {
 
         lifecycleScope.launch {
             tvOnTheAirAdapter.loadStateFlow.collectLatest { state ->
-                viewModel.isLoading.value = state.refresh is LoadState.Loading
-
-                val errorState = state.refresh as? LoadState.Error
-                    ?: state.source.append as? LoadState.Error
-                    ?: state.source.prepend as? LoadState.Error
-                    ?: state.append as? LoadState.Error
-                    ?: state.prepend as? LoadState.Error
-
-                errorState?.let {
-                    viewModel.error.value = it.error.message
-                }
+                state.setUiState(viewModel)
             }
         }
 

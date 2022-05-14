@@ -1,7 +1,10 @@
 package com.mendelin.tmdb_hilt.common
 
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
 import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
@@ -53,6 +56,20 @@ object Utils {
         return this.map {
             it.isFavorite = repository.isFavoriteTvShow(it.id)
             it
+        }
+    }
+
+    fun CombinedLoadStates.setUiState(viewModel: BaseViewModel) {
+        viewModel.isLoading.value = refresh is LoadState.Loading
+
+        val errorState = refresh as? LoadState.Error
+            ?: source.append as? LoadState.Error
+            ?: source.prepend as? LoadState.Error
+            ?: append as? LoadState.Error
+            ?: prepend as? LoadState.Error
+
+        errorState?.let {
+            viewModel.error.value = it.error.message
         }
     }
 }
