@@ -5,6 +5,7 @@ import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.domain.models.response.*
 import com.mendelin.tmdb_hilt.domain.models.rest_api.GenreItem
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,14 +21,14 @@ interface TmdbDataSource {
 
     /* Movie */
     @GET(BuildConfig.ENDPOINT_MOVIE_DETAILS)
-    suspend fun getMovieDetails(
-        @Path(BuildConfig.PATH_MOVIE_ID) movie_id: Int,
-    ): Response<MovieDetailsResponse>
+    fun getMovieDetails(
+        @Path(BuildConfig.PATH_MOVIE_ID) movie_id: Int
+    ): Single<MovieDetailsResponse>
 
     @GET(BuildConfig.ENDPOINT_MOVIE_CREDITS)
-    suspend fun getMovieCredits(
-        @Path(BuildConfig.PATH_MOVIE_ID) movie_id: Int,
-    ): Response<CreditsResponse>
+    fun getMovieCredits(
+        @Path(BuildConfig.PATH_MOVIE_ID) movie_id: Int
+    ): Single<CreditsResponse>
 
     @GET(BuildConfig.ENDPOINT_MOVIE_NOW_PLAYING)
     suspend fun getMovieNowPlaying(
@@ -46,39 +47,39 @@ interface TmdbDataSource {
 
     @GET(BuildConfig.ENDPOINT_MOVIE_UPCOMING)
     suspend fun getMovieUpcoming(
-        @Query(BuildConfig.QUERY_PAGE) page: Int = 1,
+        @Query(BuildConfig.QUERY_PAGE) page: Int = 1
     ): Response<NowPlayingGenericResponse<MovieListResultEntity>>
 
     /* People */
     @GET(BuildConfig.ENDPOINT_PERSON_DETAILS)
     suspend fun getPersonDetails(
-        @Path(BuildConfig.PATH_PERSON_ID) person_id: Int,
+        @Path(BuildConfig.PATH_PERSON_ID) person_id: Int
     ): Response<PersonDetailsResponse>
 
     @GET(BuildConfig.ENDPOINT_PERSON_MOVIE_CREDITS)
     suspend fun getPersonMovieCredits(
-        @Path(BuildConfig.PATH_PERSON_ID) person_id: Int,
+        @Path(BuildConfig.PATH_PERSON_ID) person_id: Int
     ): Response<PersonMovieCreditsResponse>
 
     @GET(BuildConfig.ENDPOINT_PERSON_TV_CREDITS)
     suspend fun getPersonTvCredits(
-        @Path(BuildConfig.PATH_PERSON_ID) person_id: Int,
+        @Path(BuildConfig.PATH_PERSON_ID) person_id: Int
     ): Response<PersonTvCreditsResponse>
 
     /* TV shows */
     @GET(BuildConfig.ENDPOINT_TV_DETAILS)
     suspend fun getTvDetails(
-        @Path(BuildConfig.PATH_TV_ID) tv_id: Int,
+        @Path(BuildConfig.PATH_TV_ID) tv_id: Int
     ): Response<TvShowDetailsResponse>
 
     @GET(BuildConfig.ENDPOINT_TV_CREDITS)
     suspend fun getTvCredits(
-        @Path(BuildConfig.PATH_TV_ID) tv_id: Int,
+        @Path(BuildConfig.PATH_TV_ID) tv_id: Int
     ): Response<CreditsResponse>
 
     @GET(BuildConfig.ENDPOINT_TV_ON_THE_AIR)
     suspend fun getTvOnTheAir(
-        @Query(BuildConfig.QUERY_PAGE) page: Int = 1,
+        @Query(BuildConfig.QUERY_PAGE) page: Int = 1
     ): Response<PagedGenericResponse<TvListResultEntity>>
 
     @GET(BuildConfig.ENDPOINT_TV_POPULAR)
@@ -88,14 +89,14 @@ interface TmdbDataSource {
 
     @GET(BuildConfig.ENDPOINT_TV_TOP_RATED)
     suspend fun getTvTopRated(
-        @Query(BuildConfig.QUERY_PAGE) page: Int = 1,
+        @Query(BuildConfig.QUERY_PAGE) page: Int = 1
     ): Response<PagedGenericResponse<TvListResultEntity>>
 
     /* TV Seasons */
     @GET(BuildConfig.ENDPOINT_TV_SEASON_DETAILS)
     suspend fun getTvSeasonDetails(
         @Path(BuildConfig.PATH_TV_ID) tv_id: Int,
-        @Path(BuildConfig.PATH_SEASON_NUMBER) season: Int,
+        @Path(BuildConfig.PATH_SEASON_NUMBER) season: Int
     ): Response<TvSeasonDetailsResponse>
 
     /* TV Episodes */
@@ -103,6 +104,6 @@ interface TmdbDataSource {
     suspend fun getTvEpisodeDetails(
         @Path(BuildConfig.PATH_TV_ID) tv_id: Int,
         @Path(BuildConfig.PATH_SEASON_NUMBER) season: Int,
-        @Path(BuildConfig.PATH_EPISODE_NUMBER) episode: Int,
+        @Path(BuildConfig.PATH_EPISODE_NUMBER) episode: Int
     ): Response<TvEpisodeDetailsResponse>
 }

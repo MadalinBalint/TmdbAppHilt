@@ -6,14 +6,15 @@ import com.mendelin.tmdb_hilt.domain.models.response.CreditsResponse
 import com.mendelin.tmdb_hilt.domain.models.response.MovieDetailsResponse
 import com.mendelin.tmdb_hilt.domain.models.response.NowPlayingGenericResponse
 import com.mendelin.tmdb_hilt.domain.models.response.PagedGenericResponse
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(private val service: TmdbDataSource) {
-    suspend fun getMovieDetails(movie_id: Int): Response<MovieDetailsResponse> =
+    fun getMovieDetails(movie_id: Int): Single<MovieDetailsResponse> =
         service.getMovieDetails(movie_id)
 
-    suspend fun getMovieCredits(movie_id: Int): Response<CreditsResponse> =
+    fun getMovieCredits(movie_id: Int): Single<CreditsResponse> =
         service.getMovieCredits(movie_id)
 
     suspend fun getNowPlayingMovies(page: Int): Response<NowPlayingGenericResponse<MovieListResultEntity>> =

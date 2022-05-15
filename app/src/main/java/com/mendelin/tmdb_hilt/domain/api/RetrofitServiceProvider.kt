@@ -9,6 +9,7 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -78,6 +79,7 @@ object RetrofitServiceProvider {
         if (api == null) {
             api = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(getGsonClient()))
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .baseUrl(BuildConfig.BASE_URL)
                 .client(okHttpClient())
                 .build()
