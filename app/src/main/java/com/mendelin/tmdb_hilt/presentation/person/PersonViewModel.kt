@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PersonViewModel @Inject constructor(val repo: PeopleRepository) : BaseViewModel() {
+class PersonViewModel @Inject constructor(private val repo: PeopleRepository) : BaseViewModel() {
     private val personDetails = MutableLiveData<PersonDetailsResponse>()
     private val personMovieCredits = MutableLiveData<PersonMovieCreditsResponse>()
     private val personTvCredits = MutableLiveData<PersonTvCreditsResponse>()

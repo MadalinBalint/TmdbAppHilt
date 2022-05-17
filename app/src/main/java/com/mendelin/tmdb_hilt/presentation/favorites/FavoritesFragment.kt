@@ -9,16 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.Utils
+import com.mendelin.tmdb_hilt.common.Utils.getFavoritesCallback
 import com.mendelin.tmdb_hilt.databinding.FragmentFavoritesBinding
-import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
-    private val viewModel: FavoritesViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
     private var binding: FragmentFavoritesBinding? = null
     private lateinit var favoritesAdapter: FavoritesAdapter
 
@@ -35,7 +33,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setupUI() {
-        favoritesAdapter = FavoritesAdapter(Utils.getFavoritesCallback(viewModel))
+        favoritesAdapter = FavoritesAdapter(favoritesViewModel.getFavoritesCallback())
 
         binding?.recyclerFavorites?.apply {
             adapter = favoritesAdapter
@@ -51,39 +49,31 @@ class FavoritesFragment : Fragment() {
         }
 
         binding?.swipeHome?.setOnRefreshListener {
-            viewModel.fetchFavoritesList()
+            favoritesViewModel.fetchFavoritesList()
             binding?.swipeHome?.isRefreshing = false
         }
 
-        viewModel.fetchFavoritesList()
+        favoritesViewModel.fetchFavoritesList()
     }
 
     private fun observeViewModel() {
-        viewModel.getErrorFilter().observe(viewLifecycleOwner) {
+        favoritesViewModel.getErrorFilter().observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 Snackbar.make(binding?.frameLayout!!, it, Snackbar.LENGTH_LONG)
                     .setAction("Retry") {
-                        viewModel.fetchFavoritesList()
+                        favoritesViewModel.fetchFavoritesList()
                     }
                     .show()
-                viewModel.onErrorHandled()
+                favoritesViewModel.onErrorHandled()
             }
         }
 
-        viewModel.getLoadingObservable().observe(viewLifecycleOwner) {
+        favoritesViewModel.getLoadingObservable().observe(viewLifecycleOwner) {
             binding?.progressFavorites?.visibility = if (it == true) View.VISIBLE else View.INVISIBLE
         }
 
-        viewModel.getFavoritesList().observe(viewLifecycleOwner) { list ->
+        favoritesViewModel.getFavoritesList().observe(viewLifecycleOwner) { list ->
             list?.let {
-                it.forEach { item ->
-                    when (item.content) {
-                        is MovieListResultEntity ->
-                            item.content.isFavorite = viewModel.repository.isFavoriteMovie(item.content.id)
-                        is TvListResultEntity ->
-                            item.content.isFavorite = viewModel.repository.isFavoriteTvShow(item.content.id)
-                    }
-                }
                 favoritesAdapter.setList(it)
             }
         }

@@ -22,28 +22,29 @@ object Utils {
         return calendar.get(Calendar.YEAR).toString()
     }
 
-    fun getFavoritesCallback(viewModel: FavoritesViewModel): FavoritesCallback =
-        object : FavoritesCallback {
-            override suspend fun insertFavoriteMovie(movie: MovieListResultEntity) {
-                viewModel.repository.insertFavoriteMovie(movie)
+    fun FavoritesViewModel.getFavoritesCallback(): FavoritesCallback {
+        return object : FavoritesCallback {
+            override fun insertFavoriteMovie(movie: MovieListResultEntity) {
+                insertFavoriteMovie(movie)
             }
 
-            override suspend fun deleteFavoriteMovie(id: Int) {
-                viewModel.repository.deleteFavoriteMovie(id)
+            override fun deleteFavoriteMovie(id: Int) {
+                deleteFavoriteMovie(id)
             }
 
-            override suspend fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
-                viewModel.repository.insertFavoriteTvShow(tvShow)
+            override fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
+                insertFavoriteTvShow(tvShow)
             }
 
-            override suspend fun deleteFavoriteTvShow(id: Int) {
-                viewModel.repository.deleteFavoriteTvShow(id)
+            override fun deleteFavoriteTvShow(id: Int) {
+                deleteFavoriteTvShow(id)
             }
 
             override fun fetchFavoritesList() {
-                viewModel.fetchFavoritesList()
+                fetchFavoritesList()
             }
         }
+    }
 
     fun PagingData<MovieListResultEntity>.setFavoriteMovies(repository: FavoritesRepository): PagingData<MovieListResultEntity> {
         return this.map {
@@ -59,17 +60,17 @@ object Utils {
         }
     }
 
-    fun CombinedLoadStates.setUiState(viewModel: BaseViewModel) {
-        viewModel.isLoading.value = refresh is LoadState.Loading
+    fun BaseViewModel.setUiState(state: CombinedLoadStates ) {
+        isLoading.value = state.refresh is LoadState.Loading
 
-        val errorState = refresh as? LoadState.Error
-            ?: source.append as? LoadState.Error
-            ?: source.prepend as? LoadState.Error
-            ?: append as? LoadState.Error
-            ?: prepend as? LoadState.Error
+        val errorState = state.refresh as? LoadState.Error
+            ?: state.source.append as? LoadState.Error
+            ?: state.source.prepend as? LoadState.Error
+            ?: state.append as? LoadState.Error
+            ?: state.prepend as? LoadState.Error
 
         errorState?.let {
-            viewModel.error.value = it.error.message
+            error.value = it.error.message
         }
     }
 }

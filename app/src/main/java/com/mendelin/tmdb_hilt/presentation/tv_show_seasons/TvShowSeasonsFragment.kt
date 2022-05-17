@@ -52,8 +52,10 @@ class TvShowSeasonsFragment : Fragment() {
 
         Timber.d("TV Show ID = ${args.tvShowId}")
 
-        viewModel.fetchTvShowDetails(args.tvShowId)
-        viewModel.fetchTvShowCredits(args.tvShowId)
+        with(viewModel) {
+            fetchTvShowDetails(args.tvShowId)
+            fetchTvShowCredits(args.tvShowId)
+        }
 
         viewModel.details.observe(viewLifecycleOwner) {
             Timber.d(it.toString())

@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TvTopRatedViewModel @Inject constructor(val favorites: FavoritesRepository, val repository: TvShowsRepository, val preferences: PreferencesRepository) : BaseViewModel() {
+class TvTopRatedViewModel @Inject constructor(val favorites: FavoritesRepository, private val repository: TvShowsRepository, private val preferences: PreferencesRepository) : BaseViewModel() {
     val topRatedTvShows = Pager(
         config = PagingConfig(pageSize = PreferencesRepository.ITEMS_PER_PAGE),
         pagingSourceFactory = {

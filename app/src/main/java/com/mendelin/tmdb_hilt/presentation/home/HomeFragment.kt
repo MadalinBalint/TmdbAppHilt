@@ -10,8 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.Utils
-import com.mendelin.tmdb_hilt.common.Utils.setFavoriteMovies
+import com.mendelin.tmdb_hilt.common.Utils.getFavoritesCallback
 import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentHomeBinding
@@ -75,7 +74,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupUI() {
-        movieTopRatedAdapter = HomeAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+        movieTopRatedAdapter = HomeAdapter(favoritesViewModel.getFavoritesCallback())
 
         binding?.recyclerTopRatedMovies?.apply {
             adapter = movieTopRatedAdapter
@@ -94,6 +93,8 @@ class HomeFragment : Fragment() {
             movieTopRatedAdapter.refresh()
             binding?.swipeHome?.isRefreshing = false
         }
+
+        homeViewModel.fetchTopRatedMovies()
     }
 
     private fun observeViewModel() {
@@ -114,13 +115,13 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             movieTopRatedAdapter.loadStateFlow.collectLatest { state ->
-                state.setUiState(homeViewModel)
+                homeViewModel.setUiState(state)
             }
         }
 
-        lifecycleScope.launch {
-            homeViewModel.topRatedMovies.collectLatest { pagingData ->
-                movieTopRatedAdapter.submitData(pagingData.setFavoriteMovies(homeViewModel.favorites))
+        homeViewModel.topRatedMovies.observe(viewLifecycleOwner) { pagingData ->
+            lifecycleScope.launch {
+                movieTopRatedAdapter.submitData(pagingData)
             }
         }
     }

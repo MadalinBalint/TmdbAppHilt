@@ -52,9 +52,11 @@ class PersonFragment : Fragment() {
 
         Timber.d("Person ID = ${args.personId}")
 
-        viewModel.fetchMovieCredits(args.personId)
-        viewModel.fetchTvCredits(args.personId)
-        viewModel.fetchPersonDetails(args.personId)
+        with(viewModel) {
+            fetchMovieCredits(args.personId)
+            fetchTvCredits(args.personId)
+            fetchPersonDetails(args.personId)
+        }
 
         viewModel.movieCredits.observe(viewLifecycleOwner) {
             creditsAdapter.setList(it.cast.sortedByDescending { credit -> credit.release_date })

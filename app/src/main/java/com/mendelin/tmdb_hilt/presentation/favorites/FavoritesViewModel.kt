@@ -2,10 +2,13 @@ package com.mendelin.tmdb_hilt.presentation.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.common.FavoriteType
-import com.mendelin.tmdb_hilt.domain.models.entity.MultipleItem
 import com.mendelin.tmdb_hilt.data.repository.local.FavoritesRepository
+import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
+import com.mendelin.tmdb_hilt.domain.models.entity.MultipleItem
+import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +18,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(val repository: FavoritesRepository) : BaseViewModel() {
+class FavoritesViewModel @Inject constructor(private val repository: FavoritesRepository) : BaseViewModel() {
     private val favoritesList = MutableLiveData<List<MultipleItem>>()
 
     fun getFavoritesList(): LiveData<List<MultipleItem>> = favoritesList
@@ -36,7 +39,7 @@ class FavoritesViewModel @Inject constructor(val repository: FavoritesRepository
             }
     }
 
-     fun fetchFavoritesList() {
+    fun fetchFavoritesList() {
         CoroutineScope(Dispatchers.IO).launch {
             val favorites = mutableListOf<MultipleItem>()
             val movies = fetchFavoriteMovies()
@@ -48,7 +51,40 @@ class FavoritesViewModel @Inject constructor(val repository: FavoritesRepository
             favorites.addAll(movies)
             favorites.addAll(tvShows)
 
+            favorites.forEach { item ->
+                when (item.content) {
+                    is MovieListResultEntity ->
+                        item.content.isFavorite = repository.isFavoriteMovie(item.content.id)
+                    is TvListResultEntity ->
+                        item.content.isFavorite = repository.isFavoriteTvShow(item.content.id)
+                }
+            }
+
             favoritesList.postValue(favorites)
+        }
+    }
+
+    fun insertFavoriteMovie(movie: MovieListResultEntity) {
+        viewModelScope.launch {
+            repository.insertFavoriteMovie(movie)
+        }
+    }
+
+    fun deleteFavoriteMovie(id: Int) {
+        viewModelScope.launch {
+            repository.deleteFavoriteMovie(id)
+        }
+    }
+
+    fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
+        viewModelScope.launch {
+            repository.insertFavoriteTvShow(tvShow)
+        }
+    }
+
+    fun deleteFavoriteTvShow(id: Int) {
+        viewModelScope.launch {
+            repository.deleteFavoriteTvShow(id)
         }
     }
 }

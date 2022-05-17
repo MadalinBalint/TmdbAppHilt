@@ -55,8 +55,10 @@ class MovieDetailsFragment : Fragment() {
 
         Timber.d("Movie ID = ${args.movieId}")
 
-        viewModel.fetchMovieCredits(args.movieId)
-        viewModel.fetchMovieDetails(args.movieId)
+        with(viewModel) {
+            fetchMovieCredits(args.movieId)
+            fetchMovieDetails(args.movieId)
+        }
 
         viewModel.casting.observe(viewLifecycleOwner) {
             Timber.d(it.toString())

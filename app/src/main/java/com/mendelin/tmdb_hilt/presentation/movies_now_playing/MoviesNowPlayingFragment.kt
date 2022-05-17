@@ -10,8 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.Utils
-import com.mendelin.tmdb_hilt.common.Utils.setFavoriteMovies
+import com.mendelin.tmdb_hilt.common.Utils.getFavoritesCallback
 import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentMoviesNowPlayingBinding
@@ -78,7 +77,7 @@ class MoviesNowPlayingFragment : Fragment() {
     }
 
     private fun setupUI() {
-        moviesNowPlayingAdapter = MoviesNowPlayingAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+        moviesNowPlayingAdapter = MoviesNowPlayingAdapter(favoritesViewModel.getFavoritesCallback())
 
         binding?.recyclerNowPlayingMovies?.apply {
             adapter = moviesNowPlayingAdapter
@@ -97,6 +96,8 @@ class MoviesNowPlayingFragment : Fragment() {
             moviesNowPlayingAdapter.refresh()
             binding?.swipeNowPlayingMovies?.isRefreshing = false
         }
+
+        viewModel.fetchNowPlayingMovies()
     }
 
     private fun observeViewModel() {
@@ -117,13 +118,13 @@ class MoviesNowPlayingFragment : Fragment() {
 
         lifecycleScope.launch {
             moviesNowPlayingAdapter.loadStateFlow.collectLatest { state ->
-                state.setUiState(viewModel)
+                viewModel.setUiState(state)
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.nowPlayingMovies.collectLatest { pagingData ->
-                moviesNowPlayingAdapter.submitData(pagingData.setFavoriteMovies(viewModel.favorites))
+        viewModel.nowPlayingMovies.observe(viewLifecycleOwner) { pagingData ->
+            lifecycleScope.launch {
+                moviesNowPlayingAdapter.submitData(pagingData)
             }
         }
     }

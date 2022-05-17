@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
-import com.mendelin.tmdb_hilt.common.Utils
+import com.mendelin.tmdb_hilt.common.Utils.getFavoritesCallback
 import com.mendelin.tmdb_hilt.common.Utils.setFavoriteTvShows
 import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
@@ -78,7 +78,7 @@ class TvOnTheAirFragment : Fragment() {
     }
 
     private fun setupUI() {
-        tvOnTheAirAdapter = TvOnTheAirAdapter(Utils.getFavoritesCallback(favoritesViewModel))
+        tvOnTheAirAdapter = TvOnTheAirAdapter(favoritesViewModel.getFavoritesCallback())
 
         binding?.recyclerOnTheAirTvShows?.apply {
             adapter = tvOnTheAirAdapter
@@ -117,7 +117,7 @@ class TvOnTheAirFragment : Fragment() {
 
         lifecycleScope.launch {
             tvOnTheAirAdapter.loadStateFlow.collectLatest { state ->
-                state.setUiState(viewModel)
+                viewModel.setUiState(state)
             }
         }
 

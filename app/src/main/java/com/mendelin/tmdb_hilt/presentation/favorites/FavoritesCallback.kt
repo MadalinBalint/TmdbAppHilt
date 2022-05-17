@@ -4,11 +4,11 @@ import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
 import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 
 interface FavoritesCallback {
-    suspend fun insertFavoriteMovie(movie: MovieListResultEntity)
-    suspend fun deleteFavoriteMovie(id: Int)
+    fun insertFavoriteMovie(movie: MovieListResultEntity)
+    fun deleteFavoriteMovie(id: Int)
 
-    suspend fun insertFavoriteTvShow(tvShow: TvListResultEntity)
-    suspend fun deleteFavoriteTvShow(id: Int)
+    fun insertFavoriteTvShow(tvShow: TvListResultEntity)
+    fun deleteFavoriteTvShow(id: Int)
 
     fun fetchFavoritesList()
 }
