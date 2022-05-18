@@ -64,25 +64,25 @@ class FavoritesViewModel @Inject constructor(private val repository: FavoritesRe
         }
     }
 
-    fun insertFavoriteMovie(movie: MovieListResultEntity) {
+    fun addFavoriteMovie(movie: MovieListResultEntity) {
         viewModelScope.launch {
             repository.insertFavoriteMovie(movie)
         }
     }
 
-    fun deleteFavoriteMovie(id: Int) {
+    fun removeFavoriteMovie(id: Int) {
         viewModelScope.launch {
             repository.deleteFavoriteMovie(id)
         }
     }
 
-    fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
+    fun addFavoriteTvShow(tvShow: TvListResultEntity) {
         viewModelScope.launch {
             repository.insertFavoriteTvShow(tvShow)
         }
     }
 
-    fun deleteFavoriteTvShow(id: Int) {
+    fun removeFavoriteTvShow(id: Int) {
         viewModelScope.launch {
             repository.deleteFavoriteTvShow(id)
         }

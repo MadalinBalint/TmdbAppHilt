@@ -10,5 +10,5 @@ interface FavoritesCallback {
     fun insertFavoriteTvShow(tvShow: TvListResultEntity)
     fun deleteFavoriteTvShow(id: Int)
 
-    fun fetchFavoritesList()
+    fun getFavoritesList()
 }

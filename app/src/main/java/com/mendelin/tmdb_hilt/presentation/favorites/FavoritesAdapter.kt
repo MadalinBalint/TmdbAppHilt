@@ -41,7 +41,7 @@ class FavoritesAdapter(val callback: FavoritesCallback) : ListAdapter<MultipleIt
                     CoroutineScope(Dispatchers.IO).launch {
                         callback.deleteFavoriteMovie(movie.id)
                         delay(200)
-                        callback.fetchFavoritesList()
+                        callback.getFavoritesList()
                     }
                 }
 
@@ -67,7 +67,7 @@ class FavoritesAdapter(val callback: FavoritesCallback) : ListAdapter<MultipleIt
                     CoroutineScope(Dispatchers.IO).launch {
                         callback.deleteFavoriteTvShow(tvShow.id)
                         delay(200)
-                        callback.fetchFavoritesList()
+                        callback.getFavoritesList()
                     }
                 }
 

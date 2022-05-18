@@ -25,22 +25,22 @@ object Utils {
     fun FavoritesViewModel.getFavoritesCallback(): FavoritesCallback {
         return object : FavoritesCallback {
             override fun insertFavoriteMovie(movie: MovieListResultEntity) {
-                insertFavoriteMovie(movie)
+                addFavoriteMovie(movie)
             }
 
             override fun deleteFavoriteMovie(id: Int) {
-                deleteFavoriteMovie(id)
+                removeFavoriteMovie(id)
             }
 
             override fun insertFavoriteTvShow(tvShow: TvListResultEntity) {
-                insertFavoriteTvShow(tvShow)
+                addFavoriteTvShow(tvShow)
             }
 
             override fun deleteFavoriteTvShow(id: Int) {
-                deleteFavoriteTvShow(id)
+                removeFavoriteTvShow(id)
             }
 
-            override fun fetchFavoritesList() {
+            override fun getFavoritesList() {
                 fetchFavoritesList()
             }
         }
@@ -60,7 +60,7 @@ object Utils {
         }
     }
 
-    fun BaseViewModel.setUiState(state: CombinedLoadStates ) {
+    fun BaseViewModel.setUiState(state: CombinedLoadStates) {
         isLoading.value = state.refresh is LoadState.Loading
 
         val errorState = state.refresh as? LoadState.Error
