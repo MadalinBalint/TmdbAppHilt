@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesNowPlayingViewModel @Inject constructor(private val favorites: FavoritesRepository, private val repo: MoviesRepository, private val preferences: PreferencesRepository) : BaseViewModel() {
-    val pagingData = Pager(
+    private val pagingData = Pager(
         config = PagingConfig(pageSize = PreferencesRepository.ITEMS_PER_PAGE),
         pagingSourceFactory = {
             MoviesNowPlayingPagingSource(repo, preferences)

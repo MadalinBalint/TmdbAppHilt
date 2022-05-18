@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesUpcomingViewModel @Inject constructor(val favorites: FavoritesRepository, private val repo: MoviesRepository, private val preferences: PreferencesRepository) : BaseViewModel() {
-    val pagingData = Pager(
+class MoviesUpcomingViewModel @Inject constructor(private val favorites: FavoritesRepository, private val repo: MoviesRepository, private val preferences: PreferencesRepository) : BaseViewModel() {
+    private val pagingData = Pager(
         config = PagingConfig(pageSize = PreferencesRepository.ITEMS_PER_PAGE),
         pagingSourceFactory = {
             MoviesUpcomingPagingSource(repo, preferences)

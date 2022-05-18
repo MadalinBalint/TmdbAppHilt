@@ -11,14 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils.getFavoritesCallback
-import com.mendelin.tmdb_hilt.common.Utils.setFavoriteTvShows
 import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvPopularBinding
-import com.mendelin.tmdb_hilt.domain.models.entity.MovieListResultEntity
-import com.mendelin.tmdb_hilt.domain.models.entity.TvListResultEntity
 import com.mendelin.tmdb_hilt.presentation.custom_view.MarginItemVerticalDecoration
-import com.mendelin.tmdb_hilt.presentation.favorites.FavoritesCallback
 import com.mendelin.tmdb_hilt.presentation.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -97,6 +93,8 @@ class TvPopularFragment : Fragment() {
             tvPopularAdapter.refresh()
             binding?.swipePopularTvShows?.isRefreshing = false
         }
+
+        viewModel.fetchPopularTvShows()
     }
 
     private fun observeViewModel() {
@@ -121,9 +119,9 @@ class TvPopularFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.popularTvShows.collectLatest { pagingData ->
-                tvPopularAdapter.submitData(pagingData.setFavoriteTvShows(viewModel.favorites))
+        viewModel.popularTvShows.observe(viewLifecycleOwner) { pagingData ->
+            lifecycleScope.launch {
+                tvPopularAdapter.submitData(pagingData)
             }
         }
     }

@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mendelin.tmdb_hilt.base.BaseViewModel
 import com.mendelin.tmdb_hilt.common.RetrofitResponseHandler
+import com.mendelin.tmdb_hilt.data.repository.remote.PeopleRepository
 import com.mendelin.tmdb_hilt.domain.models.response.PersonDetailsResponse
 import com.mendelin.tmdb_hilt.domain.models.response.PersonMovieCreditsResponse
 import com.mendelin.tmdb_hilt.domain.models.response.PersonTvCreditsResponse
-import com.mendelin.tmdb_hilt.data.repository.remote.PeopleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

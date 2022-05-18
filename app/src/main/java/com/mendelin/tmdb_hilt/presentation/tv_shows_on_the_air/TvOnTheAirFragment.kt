@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mendelin.tmdb_hilt.R
 import com.mendelin.tmdb_hilt.common.Utils.getFavoritesCallback
-import com.mendelin.tmdb_hilt.common.Utils.setFavoriteTvShows
 import com.mendelin.tmdb_hilt.common.Utils.setUiState
 import com.mendelin.tmdb_hilt.data.repository.local.PreferencesRepository
 import com.mendelin.tmdb_hilt.databinding.FragmentTvOnTheAirBinding
@@ -97,6 +96,8 @@ class TvOnTheAirFragment : Fragment() {
             tvOnTheAirAdapter.refresh()
             binding?.swipeOnTheAirTvShows?.isRefreshing = false
         }
+
+        viewModel.fetchOnTheAirTvShows()
     }
 
     private fun observeViewModel() {
@@ -121,9 +122,9 @@ class TvOnTheAirFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.onTheAirTvShows.collectLatest { pagingData ->
-                tvOnTheAirAdapter.submitData(pagingData.setFavoriteTvShows(viewModel.favorites))
+        viewModel.onTheAirTvShows.observe(viewLifecycleOwner) { pagingData ->
+            lifecycleScope.launch {
+                tvOnTheAirAdapter.submitData(pagingData)
             }
         }
     }
